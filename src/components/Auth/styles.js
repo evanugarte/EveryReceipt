@@ -1,0 +1,36 @@
+import { StyleSheet, Dimensions } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: null,
+    height: null,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoContainer: {
+    alignItems: "center"
+  },
+  logoText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "500",
+    marginTop: 10,
+    opacity: 0.5
+  },
+  input: {
+    width: Dimensions.get("window").width - 85,
+    height: 45,
+    borderRadius: 25,
+    fontSize: 16,
+    backgroundColor: "rgba(0,0,0,0.35)",
+    color: "rgba(255,255,255,0.7)",
+    marginHorizontal: 25
+  },
+  inputIcon: {
+    position: "absolute",
+    top: 8,
+    left: 37
+  }
+})
+

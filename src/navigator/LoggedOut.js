@@ -1,13 +1,13 @@
-import { createStackNavigator } from "react-navigation";
+import { createSwitchNavigator } from "react-navigation";
 
-import LoginScreen from "../components/Login/LoginScreen";
+import LoginScreen from "../components/Auth/LoginScreen";
 
 /**
  * Create navigator for the login screen. To navigate to this view we can
  * do: this.props.navigation.navigate("Login");
  */
-const LoggedOutNavigator = createStackNavigator({
-  LoggedOut: {
+const LoggedOutNavigator = createSwitchNavigator({
+  LoginScreen: {
     screen: LoginScreen
   }
 });

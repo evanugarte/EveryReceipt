@@ -7,7 +7,7 @@ import HomeNavigator from "./Home";
  * @param loggedIn parameter sent from the root js file in src.
  * @default false , in case we never sent a parameter
  */
-const getRootNavigator = (loggedIn = false) => createSwitchNavigator(
+const getRootNavigator =  createSwitchNavigator(
   {
     /**
      * Have the root navigator know about the two other navigators 
@@ -21,7 +21,7 @@ const getRootNavigator = (loggedIn = false) => createSwitchNavigator(
     }
   },
   {
-    initialRouteName: loggedIn ? "Home" : "LoggedOut"
+    initialRouteName: "LoggedOut"
   }
 );
 
