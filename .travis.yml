@@ -3,6 +3,6 @@ node_js:
  - "stable"
 install:
  - npm install
+ - npm install -g expo-cli
 script:
  - expo start --tunnel
-  
