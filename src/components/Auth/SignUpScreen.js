@@ -5,9 +5,9 @@ import {
   ImageBackground, 
   View, 
   Image,
+  TextInput,
 } from "react-native";
-import EmailAndPassword from "./EmailAndPassword";
-import FullName from "./FullName";
+import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "./styles";
 import bgImage from "../../../assets/SignInBackground.png";
 import logo from "../../../assets/Logo.png";
@@ -19,13 +19,13 @@ export default class LoginScreen extends React.Component {
       signUpActive: false,
       email: "",
       password: "",
+      loginEntries: [
+        {name: "Email", id: "email", iconName: "ios-mail"}, 
+        {name: "Password", id: "password", iconName: "ios-mail"}
+      ]
     };
     this.secondaryButton = (
       <Button title="Sign Up" onPress={this.toggleSignUp.bind(this)} />
-    );
-
-    this.signUpTextEntry = (
-      <React.Fragment />
     );
   }
 
@@ -43,6 +43,7 @@ export default class LoginScreen extends React.Component {
     this.setState({
       [e.target.id]: e.target.value
     });
+    console.log("hi");
   }
 
   handleLoginOrSignUp(){
@@ -50,15 +51,9 @@ export default class LoginScreen extends React.Component {
       this.secondaryButton = (
         <Button title="Sign Up" onPress={this.toggleSignUp.bind(this)} />
       );
-      this.signUpTextEntry = (
-        <React.Fragment />
-      );
     } else {
       this.secondaryButton = (
         <Button title="cancel" onPress={this.toggleSignUp.bind(this)} />
-      );
-      this.signUpTextEntry = (
-        <FullName handleChange={this.handleChange.bind(this)} />
       );
     }
   }
@@ -73,8 +68,27 @@ export default class LoginScreen extends React.Component {
         <View style={styles.logoContainer}>
           <Image source={logo} />
         </View>
-          {this.signUpTextEntry}
-          <EmailAndPassword handleChange={this.handleChange.bind(this)} />
+        {this.state.loginEntries.map((x) => {
+          return(
+            <View>
+              <Icon 
+                name={x.iconName} 
+                size={28} 
+                color={"rgba(255,255,255,0.7)"} 
+                style={styles.inputIcon}
+              />
+              <TextInput 
+                style={styles.input}
+                id={x.id}
+                onChange={this.handleChange.bind(this)}
+                textAlign="center"
+                placeholder={x.name}
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                underlineColorAndroid= "transparent"
+              />
+            </View>
+          );
+        })}
           <Text style={styles.logoText}>NO LIMIT!</Text>
           <Button title="Login" onPress={this.login.bind(this)} />
           {this.secondaryButton}
