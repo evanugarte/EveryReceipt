@@ -11,8 +11,8 @@ export default class LoginScreen extends React.Component {
     super(props);
     this.state = {
       loginEntries: [
-        {name: "First Name", id: "firstName", iconName: "ios-contact", secure: false}, 
-        {name: "Last Name", id: "lastName", iconName: "ios-contact", secure: true}
+        {name: "First Name", id: "firstName"}, 
+        {name: "Last Name", id: "lastName"}
       ]
     };
   }
@@ -22,11 +22,11 @@ export default class LoginScreen extends React.Component {
       <React.Fragment>
         {this.state.loginEntries.map((x) => {
           return(
-            <View key={x.id}>
+            <View key={x.id} style={styles.inputContainer}>
               <Icon 
-                name={x.iconName} 
+                name="ios-contact" 
                 size={28} 
-                color={"rgba(255,255,255,0.7)"} 
+                color="rgba(255,255,255,0.7)"
                 style={styles.inputIcon}
               />
               <TextInput 
@@ -35,7 +35,6 @@ export default class LoginScreen extends React.Component {
                 onChange={this.props.handleChange.bind(this)}
                 textAlign="center"
                 placeholder={x.name}
-                secureTextEntry={x.secure}
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
                 underlineColorAndroid= "transparent"
               />

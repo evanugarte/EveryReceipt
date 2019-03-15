@@ -1,6 +1,19 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 export const styles = StyleSheet.create({
+  btnEye: {
+    position: "absolute",
+    top: 8,
+    right: 37
+  },
+  btnLogin: {
+    width: Dimensions.get("window").width - 85,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: "#432577",
+    justifyContent: "center",
+    marginTop: 20
+  },
   container: {
     flex: 1,
     width: null,
@@ -9,7 +22,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoContainer: {
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 50
   },
   logoText: {
     color: "black",
@@ -31,6 +45,14 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 8,
     left: 37
+  },
+  inputContainer: {
+    marginTop: 10
+  },
+  text: {
+    color: "rgba(255,255,255,0.7)",
+    fontSize: 16,
+    textAlign: "center"
   }
 })
 
