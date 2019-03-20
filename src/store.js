@@ -1,21 +1,16 @@
 /**
  * This file allows redux devtools to run our app in chrome without errors.
  */
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
+import { getFirestore } from "redux-firestore";
+import { getFirebase } from "react-redux-firebase";
 
-const initialState = {};
-
-const middleware = [thunk];
 
 const store = createStore(
   rootReducer,
-  initialState,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore }))
 );
 
 export default store;

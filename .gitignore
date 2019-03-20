@@ -5,7 +5,6 @@ npm-debug.*
 *.p12
 *.key
 *.mobileprovision
-<<<<<<< HEAD
 
 ios/
 android/
@@ -50,9 +49,3 @@ buck-out/
 *.jsbundle
 
 
-
-=======
-.idea/
-.vscode/
-
->>>>>>> Added Directories to Ignore
