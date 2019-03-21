@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
 import {StyleSheet} from "react-native";
@@ -9,7 +10,7 @@ export default class Add extends React.Component {
     return(
       <React.Fragment>
         <ActionButton buttonColor="rgba(231,76,60,1)">
-          <ActionButton.Item buttonColor='#9b59b6' title="Open Camera" onPress={() => console.log("notes tapped!")}>
+          <ActionButton.Item buttonColor='#9b59b6' title="Open Camera" onPress={() => {}}>
             <Icon name="md-camera" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#3498db' title="Open Camera Roll" onPress={() => {}}>
