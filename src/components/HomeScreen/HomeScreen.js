@@ -2,6 +2,7 @@
 import React from "react";
 import { Text, Button, StyleSheet } from "react-native";
 import  AddButton  from "./AddButton.js";
+import ExpenseList from "./ExpenseList.js";
 
 
 export default class Title extends React.Component {
@@ -18,6 +19,7 @@ export default class Title extends React.Component {
   render() {
     return(
       <React.Fragment>
+        <ExpenseList />
         <AddButton/>
         <Button
           title="Logout"

@@ -12,6 +12,6 @@ var config = {
 };
 firebase.initializeApp(config);
 //Handle update for timestamps data
-firebase.firestore().settings({ timestampsInSnapshots: true });
+// firebase.firestore().settings({ timestampsInSnapshots: true });
 
 export default firebase;

@@ -1,16 +1,21 @@
 /**
  * This file allows redux devtools to run our app in chrome without errors.
  */
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import rootReducer from "./reducers";
-import { getFirestore } from "redux-firestore";
-import { getFirebase } from "react-redux-firebase";
+import rootReducer from "./reducers/index";
+import { getFirestore, reduxFirestore } from "redux-firestore";
+import { getFirebase, reactReduxFirebase } from "react-redux-firebase";
+import fbConfig from "./config/fbConfig";
 
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore }))
+  compose(
+    applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
+    reduxFirestore(fbConfig),
+    reactReduxFirebase(fbConfig)
+  )
 );
 
 export default store;

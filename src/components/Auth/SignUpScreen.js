@@ -1,21 +1,19 @@
 import React from "react";
 import { 
-  Text, 
-  Button, 
   ImageBackground, 
   View, 
   Image,
-  TextInput,
 } from "react-native";
 import FullName from "./FullName";
 import EmailAndPassword from "./EmailAndPassword";
-import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "./styles";
 import bgImage from "../../../assets/SignInBackground.png";
 import logo from "../../../assets/Logo.png";
 import AuthButton from "./AuthButton";
+// import { connect } from "react-redux";
+// import { signIn } from "../../actions/authActions";
 
-export default class LoginScreen extends React.Component {
+export default class SignUpScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -27,6 +25,7 @@ export default class LoginScreen extends React.Component {
   }
 
   login(){
+    // this.props.signIn(this.state);
     this.props.navigation.navigate("HomeScreen");
   }
 
@@ -54,4 +53,12 @@ export default class LoginScreen extends React.Component {
     );
   }
 }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     signIn: (creds) => dispatch(signIn())
+//   };
+// };
+
+// export default connect(null, mapDispatchToProps)(SignUpScreen);
 
