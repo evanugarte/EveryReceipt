@@ -13,27 +13,32 @@ export default class AddButton extends React.Component {
       buttons: [
         {
           title: "Open Camera", color: "#9b59b6",
-          icon: "md-camera", onPress: this.handlePress
+          icon: "md-camera", onPress: this.handlePress,
+          id: "camera"
         },
         {
           title: "Open Camera Roll", color: "#3498db",
-          icon: "ios-image", onPress: this.handlePress
+          icon: "ios-image", onPress: this.handlePress,
+          id: "roll"
         },
         {
           title: "Manual Add", color: "#1abc9c",
-          icon: "md-create", onPress: this.goToManualEntry
+          icon: "md-create", onPress: this.goToManualEntry,
+          id: "manual"
         },
       ]
     };
   }
 
   goToManualEntry() {
-    this.props.navigation.navigate("ManualAddScreen");
+    this.props.navigation.navigate("HomeScreen");
   }
 
   handlePress() {
 
+
   }
+
 
   render() {
     return (
@@ -41,7 +46,7 @@ export default class AddButton extends React.Component {
         <ActionButton buttonColor="rgba(231,76,60,1)">
           {this.state.buttons.map((btn) => {
             return (
-              <ActionButton.Item buttonColor={btn.color} title={btn.title} onPress={btn.onPress.bind(this)}>
+              <ActionButton.Item key={btn.id} buttonColor={btn.color} title={btn.title} onPress={() => { this.props.goToManual(); }}>
                 <Icon name={btn.icon} style={styles.actionButtonIcon} />
               </ActionButton.Item>
             );
