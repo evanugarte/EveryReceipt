@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { LOGIN_SUCCESS, LOGIN_ERROR, SIGNOUT_SUCCESS, SIGNUP_SUCCESS, SIGNUP_ERROR } from "../actions/types";
-=======
-import { LOGIN_SUCCESS, LOGIN_ERROR } from "../actions/types";
->>>>>>> Added Login for Firebase
 
 const initialState = { 
   authError: null
@@ -20,7 +16,6 @@ export default function (state = initialState, action) {
       ...state,
       authError: "Login failed"
     };
-<<<<<<< HEAD
   case SIGNOUT_SUCCESS:
     return {
       state
@@ -35,8 +30,6 @@ export default function (state = initialState, action) {
       ...state,
       authError: action.err.message
     };
-=======
->>>>>>> Added Login for Firebase
   default:
     return state;
   }
