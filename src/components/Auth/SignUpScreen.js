@@ -10,10 +10,11 @@ import { styles } from "./styles";
 import bgImage from "../../../assets/SignInBackground.png";
 import logo from "../../../assets/Logo.png";
 import AuthButton from "./AuthButton";
-// import { connect } from "react-redux";
-// import { signIn } from "../../actions/authActions";
+import firebase from "firebase";
+import { connect } from "react-redux";
+import { signUp } from "../../actions/authActions";
 
-export default class SignUpScreen extends React.Component {
+class SignUpScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -24,18 +25,23 @@ export default class SignUpScreen extends React.Component {
     };
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.props.navigation.navigate(user ? "HomeScreen" : "SignUpScreen");
+    });
+  }
+
   login(){
-    // this.props.signIn(this.state);
-    this.props.navigation.navigate("HomeScreen");
+    this.props.signUp(this.state);
   }
 
   toggleSignUp() {
     this.props.navigation.navigate("LoginScreen");
   }
 
-  handleChange(e){
+  handleChange(id, value){
     this.setState({
-      [e.target.id]: e.target.value
+      [id]: value
     });
   }
 
@@ -54,11 +60,17 @@ export default class SignUpScreen extends React.Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     signIn: (creds) => dispatch(signIn())
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  };
+};
 
-// export default connect(null, mapDispatchToProps)(SignUpScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (newUser) => dispatch(signUp(newUser))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
 
