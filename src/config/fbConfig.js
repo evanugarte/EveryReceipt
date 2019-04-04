@@ -12,14 +12,6 @@ var config = {
 };
 firebase.initializeApp(config);
 //Handle update for timestamps data
-<<<<<<< HEAD
-<<<<<<< HEAD
 // firebase.firestore().settings({ timestampsInSnapshots: true });
-=======
-firebase.firestore().settings({ timestampsInSnapshots: true });
->>>>>>> Started Integrating Redux & Firebase
-=======
-// firebase.firestore().settings({ timestampsInSnapshots: true });
->>>>>>> Added Login for Firebase
 
 export default firebase;
