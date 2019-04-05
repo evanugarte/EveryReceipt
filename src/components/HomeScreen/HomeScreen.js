@@ -18,6 +18,10 @@ class HomeScreen extends React.Component {
   logout() {
     this.props.signOut();
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fixed Bug to Store User Info
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
