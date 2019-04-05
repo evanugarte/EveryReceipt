@@ -25,43 +25,40 @@ const initialState = {
  * @param action specifies which action is to be carried out
  */
 export default function (state = initialState, action) {
-  return state;
+  switch (action.type) {
+  case GET_EXPENSES:
+    return {
+      ...state,
+      expenses: action.payload,
+      loading: false
+    };
+  //   case DELETE_EXPENSE:
+  //     return {
+  //       ...state,
+  //       expenses: state.expenses.filter((expense) => expense._id !== action.payload)
+  //     };
+  case ADD_EXPENSE:
+    return {
+      ...state,
+      expenses: [action.payload, ...state.expenses]
+    };
+  //   case EXPENSES_LOADING:
+  //     return {
+  //       ...state,
+  //       loading: true
+  //     };
+  //   case SEARCH_EXPENSES:
+  //     return {
+  //       ...state,
+  //       expenseQuery: action.payload
+  //     };
+  //   case EDIT_EXPENSE:
+  //     return {
+  //       ...state
+  //     };
+  default:
+    return {
+      ...state
+    };
+  }
 }
-// export default function (state = initialState, action) {
-//   switch (action.type) {
-//   case GET_EXPENSES:
-//     return {
-//       ...state,
-//       expenses: action.payload,
-//       loading: false
-//     };
-//   case DELETE_EXPENSE:
-//     return {
-//       ...state,
-//       expenses: state.expenses.filter((expense) => expense._id !== action.payload)
-//     };
-//   case ADD_EXPENSE:
-//     return {
-//       ...state,
-//       expenses: [action.payload, ...state.expenses]
-//     };
-//   case EXPENSES_LOADING:
-//     return {
-//       ...state,
-//       loading: true
-//     };
-//   case SEARCH_EXPENSES:
-//     return {
-//       ...state,
-//       expenseQuery: action.payload
-//     };
-//   case EDIT_EXPENSE:
-//     return {
-//       ...state
-//     };
-//   default:
-//     return {
-//       ...state
-//     };
-//   }
-// }

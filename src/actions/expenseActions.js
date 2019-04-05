@@ -1,4 +1,3 @@
-import axios from "axios";
 //Import constant action types
 import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, SEARCH_EXPENSES } from "./types";
 
@@ -25,15 +24,12 @@ export const createExpenses = (expense) => {
 //     });
 // };
 
-// export const getItems = () => (dispatch) => {
-//   dispatch(setItemsLoading());
-//   axios.get("/api/items").then((res) =>
-//     dispatch({
-//       type: GET_EXPENSES,
-//       payload: res.data
-//     })
-//   );
-// };
+export const getItems = () => (dispatch) => {
+  return (dispatch, {getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection("users");
+  };
+};
 
 // export const deleteItem = (id) => (dispatch) => {
 //   axios.delete(`/api/items/${id}`).then(() =>
