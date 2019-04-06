@@ -7,9 +7,37 @@ export const setItemsLoading = () => {
   };
 };
 
-export const createExpenses = (expense) => {
+export const addExpense = (expense) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    dispatch({ type: ADD_EXPENSE, expense });
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    firestore.collection("users").doc(authorId).collection("expenses")
+      .add({
+        name: expense.name
+      });
+    dispatch({ type: ADD_EXPENSE, payload: expense });
+  };
+};
+
+export const getExpenses = ()  => {
+  let expenses = [];
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    
+    firestore.collection("users").doc(authorId).collection("expenses")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          let currObj = {
+            id: doc.id,
+            name: doc.data().name
+          };
+          expenses.push(currObj);
+        });
+      }).then(() => {
+        dispatch( { type: GET_EXPENSES, payload: expenses } );
+      });
   };
 };
 
@@ -23,13 +51,6 @@ export const createExpenses = (expense) => {
 //       });
 //     });
 // };
-
-export const getItems = () => (dispatch) => {
-  return (dispatch, {getFirebase, getFirestore}) => {
-    const firestore = getFirestore();
-    firestore.collection("users");
-  };
-};
 
 // export const deleteItem = (id) => (dispatch) => {
 //   axios.delete(`/api/items/${id}`).then(() =>

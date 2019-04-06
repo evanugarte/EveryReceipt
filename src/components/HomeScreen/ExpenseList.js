@@ -1,6 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, Button } from "react-native";
 import { connect } from "react-redux";
+import { getExpenses, addExpense } from "../../actions/expenseActions";
 
 /**
  * TODO: 
@@ -12,7 +13,10 @@ import { connect } from "react-redux";
 class ExpenseList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { };
+  }
+
+  componentDidMount() {
+    this.props.getExpenses();
   }
 
   render() {
@@ -21,15 +25,26 @@ class ExpenseList extends React.Component {
       <React.Fragment>
         {expenses.map((exp) => {
           return(
-            <Text key={exp.id}>
-              {exp.title}
+            <Text key={exp.id} style={{color: "black", fontSize: 30}}>
+              {exp.name}
             </Text>
           );
         })}
+        <Button title="yeah"
+          onPress={() => {  
+            this.props.addExpense( {name: "onetwo" + Math.random()});
+          }} />
       </React.Fragment>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getExpenses: () => dispatch(getExpenses()),
+    addExpense: (item) => dispatch(addExpense(item))
+  };
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -37,5 +52,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ExpenseList);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
 

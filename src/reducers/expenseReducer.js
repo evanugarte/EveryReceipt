@@ -10,9 +10,6 @@ import {
   
 const initialState = {
   expenses: [
-    {id: "1", title: "walmart", content: "80 dollars"},
-    {id: "2", title: "safeway", content: "79 dollars"},
-    {id: "3", title: "whole foods", content: "9 dollars"},
   ],
   expenseQuery: null,
   loading: false
