@@ -29,11 +29,11 @@ export default function (state = initialState, action) {
       expenses: action.payload,
       loading: false
     };
-  //   case DELETE_EXPENSE:
-  //     return {
-  //       ...state,
-  //       expenses: state.expenses.filter((expense) => expense._id !== action.payload)
-  //     };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload)
+    };
   case ADD_EXPENSE:
     return {
       ...state,

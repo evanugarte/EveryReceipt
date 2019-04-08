@@ -19,7 +19,7 @@ export const addExpense = (expense) => {
   };
 };
 
-export const getExpenses = ()  => {
+export const getExpenses = () => {
   let expenses = [];
   return (dispatch, getState, {getFirebase, getFirestore}) => {
     const firestore = getFirestore();
@@ -29,14 +29,43 @@ export const getExpenses = ()  => {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
+          let curr = doc.data().expense;
           let currObj = {
             id: doc.id,
-            name: doc.data().name
+            name: curr.name,
+            items: curr.items,
+            total: curr.total
           };
+          // console.log(doc.data().expense.name);
+          // console.log(doc.data().id, " -> ", doc.data().name);
+          
           expenses.push(currObj);
         });
       }).then(() => {
         dispatch( { type: GET_EXPENSES, payload: expenses } );
+      });
+  };
+};
+
+
+/**
+ * Referencing 
+ * https://stackoverflow.com/questions/47876754/query-firestore-database-for-document-id
+ *  - to find
+ * https://stackoverflow.com/questions/47180076/how-to-delete-document-from-firestore-using-where-clause
+ *  - to delete
+ */
+export const deleteExpense = (id) => {
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    
+    var result = firestore.collection("users")
+      .doc(authorId).collection("expenses").doc(id);
+
+    result.delete()
+      .then(() => {
+        dispatch( { type: DELETE_EXPENSE, payload: id } );
       });
   };
 };
