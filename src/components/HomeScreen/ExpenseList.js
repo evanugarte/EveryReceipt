@@ -19,20 +19,53 @@ class ExpenseList extends React.Component {
     this.props.getExpenses();
   }
 
+  handleDelete(id) {
+    this.props.deleteExpense(id);
+  }
+
+  handleAdd() {
+    this.props.addExpense({
+      name: "onetwo" + Math.random(),
+      date: new Date().getTime(),
+      items: [
+        {name: "eggie", price: 4.99},
+        {name: "what!", price: 1.99}
+      ],
+      total: Math.floor(Math.random() * 10)
+    });
+  }
+
   render() {
     const { expenses } = this.props;
     return(
       <React.Fragment>
         {expenses.map((exp) => {
           return(
-            <Text key={exp.id} style={{color: "black", fontSize: 30}}>
-              {exp.name}
-            </Text>
+            <React.Fragment>
+              <Text key={exp.id} style={{color: "black", fontSize: 30}}>
+                {exp.name}
+              </Text>
+              {exp.expenses.map((x) => {
+                return (
+                  <Text>
+                    {x.name} , ${x.price}
+                  </Text>
+                );
+              })}
+              <Text>
+                total: {exp.total}
+              </Text>
+              <Button title="x"
+                onPress={() => {  
+                  this.handleDelete(exp.id);
+                }} />
+              />
+            </React.Fragment>
           );
         })}
         <Button title="yeah"
           onPress={() => {  
-            this.props.addExpense( {name: "onetwo" + Math.random()});
+            this.handleAdd();
           }} />
       </React.Fragment>
     );

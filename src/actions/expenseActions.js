@@ -13,7 +13,7 @@ export const addExpense = (expense) => {
     const authorId = getState().firebase.auth.uid;
     firestore.collection("users").doc(authorId).collection("expenses")
       .add({
-        name: expense.name
+        expense
       });
     dispatch({ type: ADD_EXPENSE, payload: expense });
   };
@@ -41,6 +41,15 @@ export const getExpenses = ()  => {
   };
 };
 
+// export const deleteItem = (id) => (dispatch) => {
+//   axios.delete(`/api/items/${id}`).then(() =>
+//     dispatch({
+//       type: DELETE_EXPENSE,
+//       payload: id
+//     })
+//   );
+// };
+
 // export const sendQuery = (newQuery) => (dispatch) => {
 //   axios
 //     .get("/api/items/search/", { params: newQuery })
@@ -50,15 +59,6 @@ export const getExpenses = ()  => {
 //         payload: res.data
 //       });
 //     });
-// };
-
-// export const deleteItem = (id) => (dispatch) => {
-//   axios.delete(`/api/items/${id}`).then(() =>
-//     dispatch({
-//       type: DELETE_EXPENSE,
-//       payload: id
-//     })
-//   );
 // };
 
 // export const editItem = (item) => (dispatch) => {
