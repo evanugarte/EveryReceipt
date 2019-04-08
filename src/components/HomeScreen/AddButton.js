@@ -3,10 +3,7 @@ import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet } from "react-native";
 import React from "react";
-
-
 export default class AddButton extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -29,17 +26,11 @@ export default class AddButton extends React.Component {
       ]
     };
   }
-
   goToManualEntry() {
-    this.props.navigation.navigate("HomeScreen");
+    this.props.navigation.navigate("ManualAddScreen");
   }
-
   handlePress() {
-
-
   }
-
-
   render() {
     return (
       <React.Fragment>
@@ -56,7 +47,6 @@ export default class AddButton extends React.Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   actionButtonIcon: {
     fontSize: 20,

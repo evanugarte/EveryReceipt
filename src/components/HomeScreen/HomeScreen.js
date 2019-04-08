@@ -28,7 +28,7 @@ class HomeScreen extends React.Component {
     return (
       <React.Fragment>
         <ExpenseList />
-        <AddButton />
+        <AddButton goToManual={this.goToManualAddScreen.bind(this)} />
         <Button
           title="Logout"
           onPress={this.logout.bind(this)} />
