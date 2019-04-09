@@ -4,13 +4,6 @@ import { connect } from "react-redux";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import ExpenseItem from "./ExpenseItem";
 
-/**
- * TODO: 
- * - Send in profile so we know the collection and then get the expenses collection
- * - refer to collection in collection from firebase docs
- * - Do get (by date added?), add, delete, search (filter)
- */
-
 class ExpenseList extends React.Component {
   constructor(props) {
     super(props);
@@ -33,10 +26,6 @@ class ExpenseList extends React.Component {
             <ExpenseItem key={exp.id} handleDelete={this.handleDelete.bind(this)} item={exp} />
           );
         })}
-        <Button title="yeah"
-          onPress={() => {  
-            this.props.addExpense( {name: "onetwo" + Math.random()});
-          }} />
       </React.Fragment>
     );
   }

@@ -32,7 +32,7 @@ export const getExpenses = () => {
           let curr = doc.data().expense;
           let currObj = {
             id: doc.id,
-            name: curr.name,
+            store: curr.store,
             items: curr.items,
             total: curr.total
           };

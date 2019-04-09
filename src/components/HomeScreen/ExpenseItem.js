@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, Button } from "react-native";
+import { styles } from "../Auth/styles";
 
 export default class ExpenseItem extends React.Component {
   constructor(props) {
@@ -9,26 +10,26 @@ export default class ExpenseItem extends React.Component {
   render() {
     let { item } = this.props;
     return (
-      <React.Fragment>
-        <Text  style={{color: "black", fontSize: 30}}>
-          {item.name}
+      <React.Fragment key={item.id}>
+        <Text key={item.id} style={styles.itemText}>
+          {item.store}
         </Text>
-        {/* {
-                 typeof item.items === "undefined" ? <React.Fragment/> :
-                   item.items.map((x) => {
-                     return (
-                       <React.Fragment>
-                         {x &&
-                         <Text>
-                           {x.name} , ${x.price}
-                         </Text>
-                         }
-                       </React.Fragment>
-                     );
-                   })
-               } */}
-        <Text>
-          total: {item.total}
+        {
+          typeof item.items.length === 0 ? <React.Fragment/> :
+            item.items.map((x) => {
+              return (
+                <React.Fragment key={Math.random(100)}>
+                  {x &&
+                  <Text>
+                    {x.name} , ${x.price}
+                  </Text>
+                  }
+                </React.Fragment>
+              );
+            })
+        }
+        <Text style={{fontSize: 20}}>
+          total: ${item.total}
         </Text>
         <Button title="x"
           onPress={() => {  
