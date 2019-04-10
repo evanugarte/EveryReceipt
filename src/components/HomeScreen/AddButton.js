@@ -31,6 +31,8 @@ export default class AddButton extends React.Component {
   }
   handlePress() {
   }
+};
+
   render() {
     return (
       <React.Fragment>
@@ -45,7 +47,6 @@ export default class AddButton extends React.Component {
         </ActionButton>
       </React.Fragment>
     );
-  }
 }
 const styles = StyleSheet.create({
   actionButtonIcon: {
