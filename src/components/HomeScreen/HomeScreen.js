@@ -1,29 +1,58 @@
-
 import React from "react";
-import { Text, Button, StyleSheet } from "react-native";
-import  AddButton  from "./AddButton.js";
+import { Button } from "react-native";
+import AddButton from "./AddButton.js";
+import ExpenseList from "./ExpenseList.js";
+import firebase from "firebase";
+import { connect } from "react-redux";
+import { signOut } from "../../actions/authActions";
 
 
-export default class Title extends React.Component {
+class HomeScreen extends React.Component {
 
-
-  async onLogout() {
-    this.props.navigation.navigate("LoggedOut");
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.props.navigation.navigate(user ? "HomeScreen" : "LoggedOut");
+    });
   }
 
-  async goToProfile() {
+  logout() {
+    this.props.signOut();
+  }
+  goToProfile() {
     this.props.navigation.navigate("Profile");
   }
+  handlePress(btnId) {
 
+    if (btnId === "manual")
+      this.props.navigation.navigate("ManualAddScreen");
+  }
   render() {
-    return(
+    return (
       <React.Fragment>
-        <AddButton/>
+        <AddButton handlePress={this.handlePress.bind(this)} />
         <Button
           title="Logout"
-          onPress={this.onLogout.bind(this)} />
+          onPress={this.logout.bind(this)} />
+        <Button
+          title="Profile"
+          onPress={this.goToProfile.bind(this)} />
+        <ExpenseList />
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signOut: () => dispatch(signOut())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 

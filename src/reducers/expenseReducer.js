@@ -9,7 +9,8 @@ import {
 } from "../actions/types";
   
 const initialState = {
-  expenses: [],
+  expenses: [
+  ],
   expenseQuery: null,
   loading: false
 };
@@ -31,27 +32,27 @@ export default function (state = initialState, action) {
   case DELETE_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter((expense) => expense._id !== action.payload)
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload)
     };
   case ADD_EXPENSE:
     return {
       ...state,
       expenses: [action.payload, ...state.expenses]
     };
-  case EXPENSES_LOADING:
-    return {
-      ...state,
-      loading: true
-    };
-  case SEARCH_EXPENSES:
-    return {
-      ...state,
-      expenseQuery: action.payload
-    };
-  case EDIT_EXPENSE:
-    return {
-      ...state
-    };
+  //   case EXPENSES_LOADING:
+  //     return {
+  //       ...state,
+  //       loading: true
+  //     };
+  //   case SEARCH_EXPENSES:
+  //     return {
+  //       ...state,
+  //       expenseQuery: action.payload
+  //     };
+  //   case EDIT_EXPENSE:
+  //     return {
+  //       ...state
+  //     };
   default:
     return {
       ...state
