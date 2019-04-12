@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, NativeModules } from "react-native";
+import {StyleSheet, NativeModules, View} from "react-native";
 import { ImagePicker, Permissions, Constants } from "expo";
 import {styles} from "../Auth/styles";
 
