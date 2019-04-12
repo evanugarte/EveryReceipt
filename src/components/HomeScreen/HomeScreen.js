@@ -9,7 +9,6 @@ import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseAct
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
 
-
 class HomeScreen extends React.Component {
 
   constructor (props) {
@@ -34,7 +33,6 @@ class HomeScreen extends React.Component {
   handleDelete(id) {
     this.props.deleteExpense(id);
   }
-
   logout() {
     this.props.signOut();
   }
