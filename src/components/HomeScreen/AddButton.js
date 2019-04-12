@@ -26,6 +26,15 @@ export default class AddButton extends React.Component {
       ]
     };
   }
+  openCamera() {
+    this.props.navigation.navigate("OpenCameraPage");
+  }
+  openCameraRoll() {
+    this.props.navigation.navigate("OpenCameraRollPage");
+  }
+  goToManualEntry() {
+    this.props.navigation.navigate("ManualAddScreen");
+  }
 
   render() {
     return (
@@ -41,6 +50,7 @@ export default class AddButton extends React.Component {
         </ActionButton>
       </React.Fragment>
     );
+  }
 }
 const styles = StyleSheet.create({
   actionButtonIcon: {
