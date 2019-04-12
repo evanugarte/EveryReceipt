@@ -5,6 +5,8 @@ import ItemEdit from "../components/ItemEdit/ItemEdit";
 import HomeScreen from "../components/HomeScreen/HomeScreen";
 import ManualAddScreen from "../components/ItemEntry/ManualAddScreen";
 import Profile from "../components/Profile/Profile";
+import OpenCameraRoll from "../components/ItemEntry/OpenCameraRoll";
+import OpenCamera from "../components/ItemEntry/OpenCamera";
 
 /**
  * Create navigator for the home screen, which contains navigations to
@@ -30,6 +32,12 @@ const HomeNavigator = createSwitchNavigator({
   /* this.props.navigation.navigate("ManualAddScreen") */
   ManualAddScreen: {
     screen: ManualAddScreen
+  },
+  OpenCameraRollPage: {
+    screen: OpenCameraRoll
+  },
+  OpenCameraPage: {
+    screen: OpenCamera
   }
 });
 

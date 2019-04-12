@@ -42,6 +42,7 @@ class HomeScreen extends React.Component {
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
+<<<<<<< 6f2587cc29acf100b61a57fa15b3a488f037ce82
 
   goToSearch() {
     this.props.navigation.navigate("SearchScreen");
@@ -53,9 +54,15 @@ class HomeScreen extends React.Component {
     });
   }
 
+=======
+>>>>>>> Adds OpenCamera and OpenCameraRoll
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
+    if (btnId === "roll")
+      this.props.navigation.navigate("OpenCameraRoll");
+    if (btnId === "camera")
+      this.props.navigation.navigate("OpenCamera");
   }
 
   render() {

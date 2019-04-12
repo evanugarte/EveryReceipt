@@ -10,12 +10,12 @@ export default class AddButton extends React.Component {
       buttons: [
         {
           title: "Open Camera", color: "#9b59b6",
-          icon: "md-camera", onPress: this.handlePress,
+          icon: "md-camera", onPress: this.openCamera,
           id: "camera"
         },
         {
           title: "Open Camera Roll", color: "#3498db",
-          icon: "ios-image", onPress: this.handlePress,
+          icon: "ios-image", onPress: this.openCameraRoll,
           id: "roll"
         },
         {
@@ -26,12 +26,15 @@ export default class AddButton extends React.Component {
       ]
     };
   }
+  openCamera() {
+    this.props.navigation.navigate("OpenCameraPage");
+  }
+  openCameraRoll() {
+    this.props.navigation.navigate("OpenCameraRollPage");
+  }
   goToManualEntry() {
     this.props.navigation.navigate("ManualAddScreen");
   }
-  handlePress() {
-  }
-};
 
   render() {
     return (
@@ -47,6 +50,7 @@ export default class AddButton extends React.Component {
         </ActionButton>
       </React.Fragment>
     );
+  }
 }
 const styles = StyleSheet.create({
   actionButtonIcon: {
