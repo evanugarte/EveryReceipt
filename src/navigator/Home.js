@@ -33,12 +33,6 @@ const HomeNavigator = createSwitchNavigator({
   ManualAddScreen: {
     screen: ManualAddScreen
   },
-  OpenCameraRollPage: {
-    screen: OpenCameraRoll
-  },
-  OpenCameraPage: {
-    screen: OpenCamera
-  }
 });
 
 export default HomeNavigator;

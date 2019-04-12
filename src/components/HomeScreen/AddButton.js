@@ -27,10 +27,8 @@ export default class AddButton extends React.Component {
     };
   }
   openCamera() {
-    this.props.navigation.navigate("OpenCameraPage");
   }
   openCameraRoll() {
-    this.props.navigation.navigate("OpenCameraRollPage");
   }
   goToManualEntry() {
     this.props.navigation.navigate("ManualAddScreen");

@@ -57,10 +57,6 @@ class HomeScreen extends React.Component {
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
-    if (btnId === "roll")
-      this.props.navigation.navigate("OpenCameraRoll");
-    if (btnId === "camera")
-      this.props.navigation.navigate("OpenCamera");
   }
 
   render() {
