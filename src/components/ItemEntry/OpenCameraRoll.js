@@ -9,7 +9,7 @@ export default class OpenCameraRoll extends React.Component {
     this.state = {
       result: null,
     };
-  };
+  }
   askPermissionsAsync = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
   };
