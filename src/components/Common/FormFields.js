@@ -4,6 +4,8 @@ import AuthButton from "../Auth/AuthButton";
 import { styles } from "../Auth/styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
+import CommonButton from "./CommonButton";
+
 import AddItemButton from "./AddItemButton";
 
 export default class FormFields extends Component {
