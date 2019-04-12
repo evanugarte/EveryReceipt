@@ -25,7 +25,7 @@ export default class OpenCamera extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        { this.useCameraHandler() }
+        { this.useCameraHandler.bind(this) }
       </View>
     );
   }
