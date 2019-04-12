@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
 import { ImagePicker, Permissions, Constants } from "expo";
 
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,13 +29,7 @@ class HomeScreen extends React.Component {
   handleDelete(id) {
     this.props.deleteExpense(id);
   }
-  logout() {
-    this.props.signOut();
-  }
 
-  goToProfile() {
-    this.props.navigation.navigate("Profile");
-  }
   useCameraHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
@@ -57,15 +52,9 @@ class HomeScreen extends React.Component {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
     if (btnId === "roll")
-<<<<<<< bcc80225dad030c43352df0ca70aa997a2fc3a91
       this.useLibraryHandler();
     if (btnId === "camera")
       this.useCameraHandler();
-=======
-      this.props.navigation.navigate("OpenCameraRoll");
-    if (btnId === "camera")
-      this.props.navigation.navigate("OpenCamera");
->>>>>>> Adds OpenCamera and OpenCameraRoll
   }
 
   render() {
