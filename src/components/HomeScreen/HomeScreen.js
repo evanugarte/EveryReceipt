@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 import AddButton from "./AddButton.js";
@@ -43,7 +42,6 @@ class HomeScreen extends React.Component {
       aspect: [4, 3],
       base64: false,
     });
-    console.log(result);
     this.setState({ result });
   };
   useLibraryHandler = async () => {
@@ -53,7 +51,6 @@ class HomeScreen extends React.Component {
       aspect: [4, 3],
       base64: false,
     });
-    console.log(result);
     this.setState({ result });
   };
   handlePress(btnId) {
