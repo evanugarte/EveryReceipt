@@ -4,12 +4,15 @@ import SearchScreen from "../components/SearchScreen/SearchScreen";
 import ItemEdit from "../components/ItemEdit/ItemEdit";
 import HomeScreen from "../components/HomeScreen/HomeScreen";
 import ManualAddScreen from "../components/ItemEntry/ManualAddScreen";
+<<<<<<< 6705db628c12c968bd700095d0acbb17f04fad1a
 <<<<<<< 6bbbb384b69ebf0c158d687f638788946371e177
 import Profile from "../components/Profile/Profile";
 =======
 import OpenCameraRoll from "../components/ItemEntry/OpenCameraRoll";
 import OpenCamera from "../components/ItemEntry/OpenCamera";
 >>>>>>> Adds OpenCamera and OpenCameraRoll
+=======
+>>>>>>> Moves camera code into HomeScreen
 
 /**
  * Create navigator for the home screen, which contains navigations to
@@ -36,12 +39,6 @@ const HomeNavigator = createSwitchNavigator({
   ManualAddScreen: {
     screen: ManualAddScreen
   },
-  OpenCameraRollPage: {
-    screen: OpenCameraRoll
-  },
-  OpenCameraPage: {
-    screen: OpenCamera
-  }
 });
 
 export default HomeNavigator;

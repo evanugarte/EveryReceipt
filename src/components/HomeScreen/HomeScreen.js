@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 import AddButton from "./AddButton.js";
@@ -8,20 +9,15 @@ import { styles } from "../Common/styles";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+import { ImagePicker, Permissions, Constants } from "expo";
 
 class HomeScreen extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-      buttons: [
-        {title: "Logout", onPress: this.logout.bind(this)},
-        {title: "Profile", onPress: this.goToProfile.bind(this)},
-        {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
-      ]
+      result: null,
     };
   }
-
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? "HomeScreen" : "LoggedOut");
@@ -40,13 +36,33 @@ class HomeScreen extends React.Component {
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
+  useCameraHandler = async () => {
+    await Permissions.askAsync(Permissions.CAMERA);
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: false,
+    });
+    console.log(result);
+    this.setState({ result });
+  };
+  useLibraryHandler = async () => {
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: false,
+    });
+    console.log(result);
+    this.setState({ result });
+  };
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
     if (btnId === "roll")
-      this.props.navigation.navigate("OpenCameraRoll");
+      this.useLibraryHandler();
     if (btnId === "camera")
-      this.props.navigation.navigate("OpenCamera");
+      this.useCameraHandler();
   }
 
   render() {
