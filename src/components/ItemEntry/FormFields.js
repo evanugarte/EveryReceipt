@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, TextInput, Button } from "react-native";
-import AuthButton from "../Auth/AuthButton";
-import { styles } from "../Auth/styles";
+import CommonButton from "../Common/CommonButton";
+import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 
@@ -117,9 +117,10 @@ class FormFields extends Component {
               this.renderItemsEntry()
           );
         })}
-        <AuthButton 
+        <CommonButton 
           text="Submit" 
-          onPress={this.addItemToDB.bind(this)} />
+          onPress={this.addItemToDB.bind(this)}  
+        />
       </View>
     );
   }

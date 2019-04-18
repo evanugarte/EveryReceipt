@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Button } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import ExpenseItem from "./ExpenseItem";
@@ -20,13 +20,13 @@ class ExpenseList extends React.Component {
   render() {
     const { expenses } = this.props;
     return(
-      <React.Fragment>
+      <View>
         {expenses.map((exp) => {
           return(
             <ExpenseItem key={exp.id} handleDelete={this.handleDelete.bind(this)} item={exp} />
           );
         })}
-      </React.Fragment>
+      </View>
     );
   }
 }

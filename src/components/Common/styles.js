@@ -1,6 +1,12 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 export const styles = StyleSheet.create({
+  backButton: {
+    ...StyleSheet.absoluteFillObject,
+    alignSelf: "flex-end",
+    marginTop: -5,
+    position: "absolute", // add if dont work with above
+  },
   btnEye: {
     position: "absolute",
     top: 8,
@@ -28,6 +34,9 @@ export const styles = StyleSheet.create({
     height: null,
     justifyContent: "center",
     alignItems: "center",
+  },
+  expenseItem: {
+    width: 100,
   },
   logoContainer: {
     alignItems: "center",
@@ -60,6 +69,17 @@ export const styles = StyleSheet.create({
   itemText: {
     color: "black", 
     fontSize: 30
+  },
+  profileName: {
+    fontSize: 20,
+    fontWeight: "500",
+    marginTop: 10,
+    opacity: 0.5
+  },
+  profileText: {
+    color: "#0f2962",
+    fontSize: 20,
+    opacity: 0.5
   },
   row: {
     minWidth: "20%",

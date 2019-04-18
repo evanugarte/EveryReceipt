@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import FormFields from "./FormFields";
-import { styles } from "../Auth/styles";
+import { styles } from "../Common/styles";
 
 export default class ManualAddScreen extends Component {
   constructor(props) {
@@ -13,9 +13,18 @@ export default class ManualAddScreen extends Component {
     };
   };
 
+  handleGoBack() {
+    this.props.navigation.navigate("HomeScreen");
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity onPress={this.handleGoBack.bind(this)}>
+          <Text>
+            Cancel
+          </Text>
+        </TouchableOpacity>
         <FormFields />
       </View>
     );
