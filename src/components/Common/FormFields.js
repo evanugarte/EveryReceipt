@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { View, TextInput, Button } from "react-native";
-import CommonButton from "../Common/CommonButton";
-import { styles } from "../Common/styles";
-import { addExpense } from "../../actions/expenseActions";
-import { connect } from "react-redux";
+import CommonButton from "./CommonButton";
+import { styles } from "./styles";
 
-class FormFields extends Component {
+export default class FormFields extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +43,7 @@ class FormFields extends Component {
       items: this.state.items,
       total: parseFloat(this.state.total).toFixed(2)
     };
-    this.props.addExpense(itemObj);
+    this.props.submit(itemObj);
   }
 
   generateKeyOrValueInputs(isKey) {
@@ -125,11 +123,5 @@ class FormFields extends Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addExpense: (item) => dispatch(addExpense(item))
-  };
-};
 
-export default connect(null, mapDispatchToProps)(FormFields);
 
