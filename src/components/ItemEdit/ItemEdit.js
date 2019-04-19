@@ -8,8 +8,12 @@ export default class ItemInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: null,
-      editActive: false
+      editActive: false,
+      //item fields
+      id: "",
+      store: "",
+      items: [{}],
+      total: ""
     };
   }
 
@@ -19,9 +23,19 @@ export default class ItemInfo extends React.Component {
     });
   }
 
+  submitEdit(id, obj) {
+    
+  }
+
   toggleEdit() {
+    const { params } = this.props.navigation.state;
+    const editItem = params ? params.editItem : null;
     this.setState({
-      editActive: !this.state.editActive
+      editActive: !this.state.editActive,
+      id: editItem.id,
+      store: editItem.store,
+      items: editItem.items,
+      total: editItem.total
     }, () => setTimeout(() => {}, 1500));
   }
 
@@ -55,8 +69,18 @@ export default class ItemInfo extends React.Component {
     const editItem = params ? params.editItem : null;
     if(this.state.editActive)
     {
-      return (
-        <FormFields />
+      const expense = {
+        store: this.state.store,
+        items: this.state.items,
+        total: this.state.total
+      };
+      return(
+        <FormFields 
+          editActive={true}
+          expense={expense}
+          submit={this.submitEdit.bind(this)}
+          submitText="Save"
+        />
       );
     } else {
       return (

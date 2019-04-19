@@ -25,6 +25,18 @@ export default class FormFields extends Component {
     });
   }
 
+  componentDidMount() {
+    if(this.props.editActive && this.props.expense.items.length !== 0)
+    {
+      this.setState({
+        store: this.props.expense.store,
+        total: this.props.expense.total,
+        items: this.props.expense.items,
+        pairCount: this.props.expense.items.length
+      });
+    }
+  }
+
   handleItemChange(index, type, val) {
     let temp = [...this.state.items];
     if(type === "item") {
@@ -51,14 +63,32 @@ export default class FormFields extends Component {
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
 
-    for (let i = 0; i < this.state.pairCount + 1; i++) {
-      inputElements.push(<TextInput 
-        placeholder={`${inputType} ${i}`} 
-        id={inputId}
-        name={i} 
-        key={`${inputId}-${i}`} 
-        onChangeText={(text) => this.handleItemChange(i, inputId, text)}
-      />);
+    if(this.props.editActive && this.props.expense.items.length !== 0) {
+      for (let i = 0; i < this.state.pairCount; i++) {
+        inputElements.push(<TextInput 
+          placeholder={`${inputType} ${i}`} 
+          defaultValue={
+            this.props.editActive ? 
+              isKey ?  
+                this.props.expense.items[i].name
+                : this.props.expense.items[i].price
+              : ""}
+          id={inputId}
+          name={i} 
+          key={`${inputId}-${i}`} 
+          onChangeText={(text) => this.handleItemChange(i, inputId, text)}
+        />);
+      }
+    } else {
+      for (let i = 0; i < this.state.pairCount + 1; i++) {
+        inputElements.push(<TextInput 
+          placeholder={`${inputType} ${i}`} 
+          id={inputId}
+          name={i} 
+          key={`${inputId}-${i}`} 
+          onChangeText={(text) => this.handleItemChange(i, inputId, text)}
+        />);
+      }
     }
 
     return inputElements;
@@ -106,6 +136,7 @@ export default class FormFields extends Component {
               <TextInput 
                 key={f.id}
                 style={styles.input}
+                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
@@ -116,7 +147,7 @@ export default class FormFields extends Component {
           );
         })}
         <CommonButton 
-          text="Submit" 
+          text={this.props.submitText ? this.props.submitText : "Submit"} 
           onPress={this.addItemToDB.bind(this)}  
         />
       </View>
