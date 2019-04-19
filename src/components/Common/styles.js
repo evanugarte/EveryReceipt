@@ -35,8 +35,15 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  deleteBtn: {
+    position: "absolute",
+    right: 0
+  },
   expenseItem: {
-    width: 100,
+    position: "relative",
+    width: Dimensions.get("window").width - 85,
+    height: 45,
+    marginHorizontal: 25
   },
   logoContainer: {
     alignItems: "center",
