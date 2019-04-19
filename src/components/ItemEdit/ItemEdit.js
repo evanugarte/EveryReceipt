@@ -2,12 +2,14 @@ import React from "react";
 import CommonButton from "../Common/CommonButton";
 import { View, Text } from "react-native";
 import { styles } from "../Common/styles";
+import FormFields from "../Common/FormFields";
 
 export default class ItemInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: null
+      item: null,
+      editActive: false
     };
   }
 
@@ -15,6 +17,12 @@ export default class ItemInfo extends React.Component {
     this.setState({
       item: this.props.navigation.state.params.item
     });
+  }
+
+  toggleEdit() {
+    this.setState({
+      editActive: !this.state.editActive
+    }, () => setTimeout(() => {}, 1500));
   }
 
   renderItemsFromExpense(itemList) {
@@ -45,20 +53,42 @@ export default class ItemInfo extends React.Component {
   getExpenseInfo() {
     const { params } = this.props.navigation.state;
     const editItem = params ? params.editItem : null;
-    return (
-      <React.Fragment>
-        <Text style={styles.itemText}>
-          Store: {editItem.store}
-        </Text>
-        <Text style={styles.itemText}>
-          Items: 
-        </Text>
-        {this.renderItemsFromExpense(editItem.items)}
-        <Text style={styles.itemText}>
-          Total: ${editItem.total}
-        </Text>
-      </React.Fragment>
-    );
+    if(this.state.editActive)
+    {
+      return (
+        <FormFields />
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <Text style={styles.itemText}>
+            Store: {editItem.store}
+          </Text>
+          <Text style={styles.itemText}>
+            Items: 
+          </Text>
+          {this.renderItemsFromExpense(editItem.items)}
+          <Text style={styles.itemText}>
+            Total: ${editItem.total}
+          </Text>
+        </React.Fragment>
+      );
+    }
+  }
+
+  renderButtons() {
+    if(this.state.editActive) {
+      return (
+        <CommonButton text={"Cancel"} onPress={this.toggleEdit.bind(this)} />
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <CommonButton text={"Edit Item"} onPress={this.toggleEdit.bind(this)} />
+          <CommonButton text={"Go Back to Home"} onPress={this.goHome.bind(this)} />
+        </React.Fragment>
+      );
+    }
   }
 
   goHome() {
@@ -69,7 +99,7 @@ export default class ItemInfo extends React.Component {
     return (
       <View style={styles.container}>
         {this.getExpenseInfo()}
-        <CommonButton text={"Go Back"} onPress={this.goHome.bind(this)} />
+        {this.renderButtons()}
       </View>
     );
   }
