@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import ExpenseItem from "./ExpenseItem";
+import { styles } from "../Common/styles";
 
 class ExpenseList extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class ExpenseList extends React.Component {
   render() {
     const { expenses } = this.props;
     return(
-      <View>
+      <React.Fragment>
         {expenses.map((exp) => {
           return(
             <ExpenseItem 
@@ -30,7 +31,7 @@ class ExpenseList extends React.Component {
               item={exp} />
           );
         })}
-      </View>
+      </React.Fragment>
     );
   }
 }

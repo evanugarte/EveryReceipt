@@ -7,14 +7,14 @@ export default class ExpenseItem extends React.Component {
     super(props);
   }
 
-  handleEdit() {
-    this.props.toggleEdit();
+  handleEdit(item) {
+    this.props.toggleEdit(item);
   }
 
   render() {
     let { item } = this.props;
     return (
-      <React.Fragment>
+      <View style={styles.expensePadding}>
         <View key={item.id} style={styles.expenseItem}>
           <TouchableOpacity onPress={() => this.handleEdit(item)}>
             <Text key={item.id} style={styles.itemText}>
@@ -45,7 +45,7 @@ export default class ExpenseItem extends React.Component {
               this.props.handleDelete(item.id);
             }} /> 
         </View>
-      </React.Fragment>
+      </View>
     );
   }
 

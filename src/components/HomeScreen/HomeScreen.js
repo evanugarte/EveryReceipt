@@ -34,7 +34,9 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate("Profile");
   }
   toggleEdit(item) {
-    this.props.navigation.navigate("ItemEdit", { item });
+    this.props.navigation.navigate("ItemEdit", { 
+      editItem: item
+    });
   }
   handlePress(btnId) {
 

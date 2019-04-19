@@ -45,6 +45,9 @@ export const styles = StyleSheet.create({
     height: 45,
     marginHorizontal: 25
   },
+  expensePadding: {
+    padding: 20
+  },
   logoContainer: {
     alignItems: "center",
     marginBottom: 50
@@ -76,6 +79,10 @@ export const styles = StyleSheet.create({
   itemText: {
     color: "black", 
     fontSize: 30
+  },
+  itemSubText: {
+    color: "black", 
+    fontSize: 20
   },
   profileName: {
     fontSize: 20,
