@@ -23,7 +23,11 @@ class ExpenseList extends React.Component {
       <View>
         {expenses.map((exp) => {
           return(
-            <ExpenseItem key={exp.id} handleDelete={this.handleDelete.bind(this)} item={exp} />
+            <ExpenseItem 
+              key={exp.id} 
+              handleDelete={this.handleDelete.bind(this)}
+              toggleEdit={this.props.toggleEdit.bind(this)}
+              item={exp} />
           );
         })}
       </View>

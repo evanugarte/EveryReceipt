@@ -30,7 +30,6 @@ export const getExpenses = () => {
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           let curr = doc.data().expense;
-          console.log(doc.id);
           let currObj = {
             id: doc.id,
             store: curr.store,

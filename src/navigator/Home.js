@@ -1,5 +1,6 @@
 import { createSwitchNavigator } from "react-navigation";
 
+import ItemEdit from "../components/ItemEdit/ItemEdit";
 import HomeScreen from "../components/HomeScreen/HomeScreen";
 import ManualAddScreen from "../components/ItemEntry/ManualAddScreen";
 import Profile from "../components/Profile/Profile";
@@ -9,6 +10,9 @@ import Profile from "../components/Profile/Profile";
  * the app's home screen or user profile.
  */
 const HomeNavigator = createSwitchNavigator({
+  ItemEdit: {
+    screen: ItemEdit
+  },
   /* this.props.navigation.navigate("HomeScreen") */
   HomeScreen: {
     screen: HomeScreen

@@ -33,6 +33,9 @@ class HomeScreen extends React.Component {
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
+  toggleEdit(item) {
+    this.props.navigation.navigate("ItemEdit", { item });
+  }
   handlePress(btnId) {
 
     if (btnId === "manual")
@@ -52,7 +55,7 @@ class HomeScreen extends React.Component {
               />
             );
           })}
-          <ExpenseList />
+          <ExpenseList toggleEdit={this.toggleEdit.bind(this)} />
         </View>
       </React.Fragment>
     );
