@@ -68,7 +68,7 @@ export default class FormFields extends Component {
         inputElements.push(<TextInput 
           placeholder={`${inputType} ${i}`} 
           defaultValue={
-            this.props.editActive ? 
+            this.props.editActive && i < this.props.expense.items.length ? 
               isKey ?  
                 this.props.expense.items[i].name
                 : this.props.expense.items[i].price
@@ -82,7 +82,7 @@ export default class FormFields extends Component {
     } else {
       for (let i = 0; i < this.state.pairCount + 1; i++) {
         inputElements.push(<TextInput 
-          placeholder={`${inputType} ${i}`} 
+          placeholder={`${inputType} ${i + 1}`} 
           id={inputId}
           name={i} 
           key={`${inputId}-${i}`} 
