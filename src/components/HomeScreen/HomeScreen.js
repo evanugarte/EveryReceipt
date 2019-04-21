@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 import AddButton from "./AddButton.js";
-import ExpenseList from "./ExpenseList.js";
+import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
 import firebase from "firebase";
 import { styles } from "../Common/styles";

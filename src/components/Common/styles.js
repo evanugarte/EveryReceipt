@@ -35,6 +35,10 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  dropdown: {
+    width: Dimensions.get("window").width - 125,
+    height: 45,
+  },
   deleteBtn: {
     position: "absolute",
     right: 0

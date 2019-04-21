@@ -1,5 +1,5 @@
 import React from "react";
-import ExpenseItem from "./ExpenseItem";
+import ExpenseItem from "../HomeScreen/ExpenseItem";
 
 export default class ExpenseList extends React.Component {
   constructor(props) {

@@ -23,7 +23,8 @@ export default class SearchBar extends React.Component {
   }
 
   handleSearch() {
-    
+    let { queryType, query } = this.state;
+    this.props.handleSearch(queryType, query);
   }
 
   handleChange(val) {
@@ -34,7 +35,8 @@ export default class SearchBar extends React.Component {
 
   render() {
     return(
-      <View style={styles.row}>
+      <View>
+        {/* <View style={styles.row}> */}
         <TextInput
           style={styles.search}
           textAlign="center"
@@ -42,7 +44,7 @@ export default class SearchBar extends React.Component {
           onChangeText={(text) => this.handleChange(text)} />
         <Picker
           selectedValue={this.state.queryType}
-          style={{height: 50, width: 100}}
+          style={styles.dropdown}
           onValueChange={(itemValue, itemIndex) =>
             this.setState({queryType: itemValue})
           }>
@@ -54,6 +56,7 @@ export default class SearchBar extends React.Component {
             })
           }
         </Picker>
+        {/* </View> */}
         <Button 
           onPress={this.handleSearch.bind(this)} 
           style={{minWidth: 10, minHeight: 10}}

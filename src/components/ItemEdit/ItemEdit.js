@@ -139,7 +139,7 @@ class ItemEdit extends React.Component {
   }
 
   goHome() {
-    this.props.navigation.navigate("HomeScreen");
+    this.props.navigation.goBack(null);
   }
   
   render() {

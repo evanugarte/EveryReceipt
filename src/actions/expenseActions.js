@@ -85,30 +85,23 @@ export const editExpense = (id, expense) => {
   };
 };
 
-export const searchExpenses = (type) => {
-  let expenses = [];
+export const searchExpenses = (queryType, query) => {
+  let searchResults = [];
   return (dispatch, getState, {getFirebase, getFirestore}) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
     
-    firestore.collection("users").doc(authorId).collection("expenses")
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          let curr = doc.data().expense;
-          let currObj = {
-            id: doc.id,
-            store: curr.store,
-            items: curr.items,
-            total: curr.total
-          };
-          // console.log(doc.data().expense.name);
-          // console.log(doc.data().id, " -> ", doc.data().name);
-          
-          expenses.push(currObj);
-        });
-      }).then(() => {
-        dispatch( { type: GET_EXPENSES, payload: expenses } );
-      });
+    let expRef = firestore.collection("users")
+      .doc(authorId).collection("expenses");
+    
+    console.log(expRef.where("store", "==", query));
+    // console.log(doc.data().expense.name);
+    // console.log(doc.data().id, " -> ", doc.data().name);
+        
+    //     expenses.push(currObj);
+    //   });
+    // }).then(() => {
+    //   dispatch( { type: GET_EXPENSES, payload: expenses } );
+    // });
   };
 };
