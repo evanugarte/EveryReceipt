@@ -141,10 +141,16 @@ class ItemEdit extends React.Component {
   goHome() {
     const { params } = this.props.navigation.state;
     const searchActive = params ? params.searchActive : null;
+    const prevQuery = params ? params.query : null;
+    const prevQueryType = params ? params.queryType : null;
     this.props.navigation.navigate(
       typeof searchActive !== "undefined" ? 
         "SearchScreen" :
-        "HomeScreen"
+        "HomeScreen",
+      {
+        query: prevQuery,
+        queryType: prevQueryType
+      }
     );
   }
   

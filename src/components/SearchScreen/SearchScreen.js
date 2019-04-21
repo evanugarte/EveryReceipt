@@ -7,30 +7,37 @@ import { styles } from "../Common/styles";
 import SearchBar from "./SearchBar";
 import CommonButton from "../Common/CommonButton";
 import ExpenseList from "../Common/ExpenseList";
-import { searchExpenses } from "../../actions/expenseActions";
+import { searchExpenses, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      query: "",
+      queryType: ""
     };
   }
 
-  onQueryChange() {
-
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
+    const query = params ? params.query : null;
+    const queryType = params ? params.queryType : null;
+    this.props.searchExpenses(queryType, query);
   }
 
   toggleEdit(item) {
     this.props.navigation.navigate("ItemEdit", { 
       editItem: item,
-      searchActive: true
+      searchActive: true,
+      query: this.state.query,
+      queryType: this.state.queryType
     });
   }
 
   renderExpenseList() {
     let { searchResults } = this.props;
-    if(typeof searchResults !== "undefined") {
+    if(typeof searchResults !== "undefined" && searchResults.length !== 0) {
       return (
         <ExpenseList 
           expenses={searchResults}
@@ -46,11 +53,16 @@ class SearchScreen extends React.Component {
 
   handleDelete(id) {
     this.props.deleteExpense(id);
+    this.props.searchExpenses(this.state.queryType, this.state.query);
   }
 
   handleSearch(queryType, query) {
     this.props.searchExpenses(queryType, query);
-    setTimeout(() => {}, 1500);
+    this.setState({
+      queryType: queryType,
+      query: query
+    });
+    // setTimeout(() => {}, 1500);
     this.renderExpenseList();
   }
 
@@ -66,7 +78,6 @@ class SearchScreen extends React.Component {
           text="Go Home"
         />
         <SearchBar 
-          onQueryChange={this.onQueryChange.bind(this)}
           handleSearch={this.handleSearch.bind(this)} />
         {this.renderExpenseList()}
       </View>
