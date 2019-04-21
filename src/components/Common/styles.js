@@ -104,6 +104,15 @@ export const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.7)",
     fontSize: 16,
     textAlign: "center"
-  }
+  },
+  search: {
+    width: Dimensions.get("window").width - 135,
+    height: 45,
+    borderRadius: 25,
+    fontSize: 16,
+    backgroundColor: "rgba(0,0,0,0.35)",
+    color: "rgba(255,255,255,0.7)",
+    marginHorizontal: 25
+  },
 });
 

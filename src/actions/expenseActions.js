@@ -85,13 +85,30 @@ export const editExpense = (id, expense) => {
   };
 };
 
-// export const sendQuery = (newQuery) => (dispatch) => {
-//   axios
-//     .get("/api/items/search/", { params: newQuery })
-//     .then(res => {
-//       dispatch({
-//         type: SEARCH_EXPENSES,
-//         payload: res.data
-//       });
-//     });
-// };
+export const searchExpenses = (type) => {
+  let expenses = [];
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    
+    firestore.collection("users").doc(authorId).collection("expenses")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          let curr = doc.data().expense;
+          let currObj = {
+            id: doc.id,
+            store: curr.store,
+            items: curr.items,
+            total: curr.total
+          };
+          // console.log(doc.data().expense.name);
+          // console.log(doc.data().id, " -> ", doc.data().name);
+          
+          expenses.push(currObj);
+        });
+      }).then(() => {
+        dispatch( { type: GET_EXPENSES, payload: expenses } );
+      });
+  };
+};

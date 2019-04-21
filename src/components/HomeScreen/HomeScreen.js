@@ -16,7 +16,8 @@ class HomeScreen extends React.Component {
     this.state = {
       buttons: [
         {title: "Logout", onPress: this.logout.bind(this)},
-        {title: "Profile", onPress: this.goToProfile.bind(this)}
+        {title: "Profile", onPress: this.goToProfile.bind(this)},
+        {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
       ]
     };
   }
@@ -30,19 +31,26 @@ class HomeScreen extends React.Component {
   logout() {
     this.props.signOut();
   }
+
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
+
+  goToSearch() {
+    this.props.navigation.navigate("SearchScreen");
+  }
+
   toggleEdit(item) {
     this.props.navigation.navigate("ItemEdit", { 
       editItem: item
     });
   }
-  handlePress(btnId) {
 
+  handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
   }
+  
   render() {
     return (
       <React.Fragment>
@@ -56,7 +64,7 @@ class HomeScreen extends React.Component {
                 onPress={btn.onPress}
               />
             );
-          })}
+          })} 
           <ExpenseList toggleEdit={this.toggleEdit.bind(this)} />
         </View>
       </React.Fragment>
