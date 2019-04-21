@@ -1,6 +1,7 @@
 import React from "react";
 import { 
-  View
+  View,
+  Text
 } from "react-native";
 import { styles } from "../Common/styles";
 import SearchBar from "./SearchBar";
@@ -22,8 +23,25 @@ class SearchScreen extends React.Component {
 
   toggleEdit(item) {
     this.props.navigation.navigate("ItemEdit", { 
-      editItem: item
+      editItem: item,
+      searchActive: true
     });
+  }
+
+  renderExpenseList() {
+    let { searchResults } = this.props;
+    if(typeof searchResults !== "undefined") {
+      return (
+        <ExpenseList 
+          expenses={searchResults}
+          deleteExpense={this.handleDelete.bind(this)}
+          toggleEdit={this.toggleEdit.bind(this)} />
+      );
+    } else {
+      return (
+        <Text>No results</Text>
+      );
+    }
   }
 
   handleDelete(id) {
@@ -32,6 +50,8 @@ class SearchScreen extends React.Component {
 
   handleSearch(queryType, query) {
     this.props.searchExpenses(queryType, query);
+    setTimeout(() => {}, 1500);
+    this.renderExpenseList();
   }
 
   goHome() {
@@ -39,7 +59,6 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    let { searchResults } = this.props;
     return(
       <View style={styles.container}>
         <CommonButton 
@@ -49,11 +68,7 @@ class SearchScreen extends React.Component {
         <SearchBar 
           onQueryChange={this.onQueryChange.bind(this)}
           handleSearch={this.handleSearch.bind(this)} />
-
-        <ExpenseList 
-          expenses={searchResults}
-          deleteExpense={this.handleDelete.bind(this)}
-          toggleEdit={this.toggleEdit.bind(this)} />
+        {this.renderExpenseList()}
       </View>
     );
   }

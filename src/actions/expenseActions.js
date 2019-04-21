@@ -90,18 +90,35 @@ export const searchExpenses = (queryType, query) => {
   return (dispatch, getState, {getFirebase, getFirestore}) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
-    
-    let expRef = firestore.collection("users")
-      .doc(authorId).collection("expenses");
-    
-    console.log(expRef.where("store", "==", query));
-    // console.log(doc.data().expense.name);
-    // console.log(doc.data().id, " -> ", doc.data().name);
-        
-    //     expenses.push(currObj);
-    //   });
-    // }).then(() => {
-    //   dispatch( { type: GET_EXPENSES, payload: expenses } );
-    // });
+
+    firestore.collection("users").doc(authorId).collection("expenses")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          let curr = doc.data().expense;
+          let currObj = {
+            id: doc.id,
+            store: curr.store,
+            items: curr.items,
+            total: curr.total
+          };
+
+          if(queryType === "store") {
+            if(currObj.store === query) {
+              searchResults.push(currObj);
+            }
+          } else if (queryType === "price-greater-than") {
+            if(parseFloat(currObj.total) >= parseFloat(query)) {
+              searchResults.push(currObj);
+            }
+          } else if (queryType === "price-less-than") {
+            if(parseFloat(currObj.total) <= parseFloat(query)) {
+              searchResults.push(currObj);
+            }
+          }
+        });
+      }).then(() => {
+        dispatch( { type: SEARCH_EXPENSES, payload: searchResults } );
+      });
   };
 };
