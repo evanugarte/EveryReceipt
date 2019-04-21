@@ -1,17 +1,9 @@
 import React from "react";
-import { View } from "react-native";
-import { connect } from "react-redux";
-import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import ExpenseItem from "./ExpenseItem";
-import { styles } from "../Common/styles";
 
-class ExpenseList extends React.Component {
+export default class ExpenseList extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.props.getExpenses();
   }
 
   handleDelete(id) {
@@ -35,20 +27,3 @@ class ExpenseList extends React.Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getExpenses: () => dispatch(getExpenses()),
-    addExpense: (item) => dispatch(addExpense(item)),
-    deleteExpense: (id) => dispatch(deleteExpense(id))
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    expenses: state.expense.expenses
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
-

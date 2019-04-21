@@ -22,6 +22,10 @@ export default class SearchBar extends React.Component {
     };
   }
 
+  handleSearch() {
+    
+  }
+
   handleChange(val) {
     this.setState({
       query: val
@@ -51,7 +55,7 @@ export default class SearchBar extends React.Component {
           }
         </Picker>
         <Button 
-          // onPress={} 
+          onPress={this.handleSearch.bind(this)} 
           style={{minWidth: 10, minHeight: 10}}
           title="Search"/>
       </View>
