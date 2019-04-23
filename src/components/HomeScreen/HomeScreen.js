@@ -16,6 +16,11 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       result: null,
+      buttons: [
+        {title: "Logout", onPress: this.logout.bind(this)},
+        {title: "Profile", onPress: this.goToProfile.bind(this)},
+        {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
+      ]
     };
   }
   componentDidMount() {
