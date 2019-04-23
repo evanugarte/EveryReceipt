@@ -35,6 +35,29 @@ class HomeScreen extends React.Component {
     this.props.deleteExpense(id);
   }
 
+  logout() {
+    this.props.signOut();
+  }
+
+  goToProfile() {
+    this.props.navigation.navigate("Profile");
+  }
+
+  goToSearch() {
+    this.props.navigation.navigate("SearchScreen");
+  }
+
+  toggleEdit(item) {
+    this.props.navigation.navigate("ItemEdit", {
+      editItem: item
+    });
+  }
+
+  handlePress(btnId) {
+    if (btnId === "manual")
+      this.props.navigation.navigate("ManualAddScreen");
+  }
+
   useCameraHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
@@ -53,6 +76,7 @@ class HomeScreen extends React.Component {
     });
     this.setState({ result });
   };
+
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");

@@ -4,6 +4,7 @@ import { styles } from "./styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import CommonButton from "./CommonButton";
+import AddItemButton from "../ItemEntry/AddItemButton";
 
 export default class FormFields extends Component {
   constructor(props) {
