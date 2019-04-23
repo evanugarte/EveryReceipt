@@ -3,7 +3,7 @@ import SearchScreen from "../components/SearchScreen/SearchScreen";
 import ItemEdit from "../components/ItemEdit/ItemEdit";
 import HomeScreen from "../components/HomeScreen/HomeScreen";
 import ManualAddScreen from "../components/ItemEntry/ManualAddScreen";
-
+import Profile from "../components/Profile/Profile";
 
 /**
  * Create navigator for the home screen, which contains navigations to

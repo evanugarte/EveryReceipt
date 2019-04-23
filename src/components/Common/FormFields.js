@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { View, TextInput, Button } from "react-native";
-import AuthButton from "../Auth/AuthButton";
-import { styles } from "../Auth/styles";
+import { styles } from "./styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import CommonButton from "./CommonButton";
-
-import AddItemButton from "./AddItemButton";
 
 export default class FormFields extends Component {
   constructor(props) {

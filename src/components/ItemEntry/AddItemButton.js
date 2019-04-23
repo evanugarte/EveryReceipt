@@ -3,7 +3,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import {styles} from "../Auth/styles";
+import {styles} from "../Common/styles";
 
 
 export default class AuthButton extends React.Component {
