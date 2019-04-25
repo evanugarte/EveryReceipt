@@ -8,9 +8,15 @@ import AddItemButton from "../ItemEntry/AddItemButton";
 
 
 
+
+
+
+
+
 export default class FormFields extends Component {
   constructor(props) {
     super(props);
+    this.total = 0;
     this.state = {
       pairCount: 0,
       store: "",
@@ -49,6 +55,8 @@ export default class FormFields extends Component {
       temp[index].name = val;
     } else {
       temp[index].price = parseFloat(val).toFixed(2);
+
+
     }
     this.setState({
       items: temp
@@ -59,7 +67,8 @@ export default class FormFields extends Component {
     let itemObj = {
       store: this.state.store,
       items: this.state.items,
-      total: parseFloat(this.state.total).toFixed(2)
+      total: parseFloat(this.total).toFixed(2)
+      // total: parseFloat(this.state.total).toFixed(2)
     };
     this.props.submit(itemObj);
   }
@@ -68,12 +77,13 @@ export default class FormFields extends Component {
     let inputType = (isKey ? "Item name" : "Price");
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
-    let tmpPrice = -1;
+    let tmpPrice = 0;
 
 
     if (this.props.editActive && this.props.expense.items.length !== 0) {
+
       for (let i = 0; i < this.state.pairCount; i++) {
-        tmpPrice += 1;
+
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i}`}
           defaultValue={
@@ -89,25 +99,40 @@ export default class FormFields extends Component {
         />);
 
       }
-      this.handleChange("total", tmpPrice);
 
     }
 
     else {
+
       for (let i = 0; i < this.state.pairCount + 1; i++) {
-        tmpPrice += 1;
+
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i + 1}`}
           id={inputId}
           name={i}
           key={`${inputId}-${i}`}
           onChangeText={(text) => this.handleItemChange(i, inputId, text)}
+
+
+
         />);
+
+
+
+
       }
-      this.handleChange("total", tmpPrice);
     }
 
 
+    if (inputId === "price") {
+
+      for (let i = 0; i < this.state.items.length; i++) {
+
+        tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
+
+      }
+      this.total = tmpPrice;
+    }
 
     return inputElements;
   }
