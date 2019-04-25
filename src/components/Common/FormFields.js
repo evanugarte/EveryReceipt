@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import CommonButton from "./CommonButton";
 import AddItemButton from "../ItemEntry/AddItemButton";
 
+
+
 export default class FormFields extends Component {
   constructor(props) {
     super(props);
@@ -14,9 +16,9 @@ export default class FormFields extends Component {
       store: "",
       total: 0,
       fields: [
-        { name: "Store Name", id: "store"},
-        { name: "Items", id: "items"},
-        { name: "Total Amount", id: "total"},
+        { name: "Store Name", id: "store" },
+        { name: "Items", id: "items" },
+        { name: "Total Amount", id: "total" },
       ],
       items: [{}]
     };
@@ -28,9 +30,10 @@ export default class FormFields extends Component {
     });
   }
 
+
+
   componentDidMount() {
-    if(this.props.editActive && this.props.expense.items.length !== 0)
-    {
+    if (this.props.editActive && this.props.expense.items.length !== 0) {
       this.setState({
         store: this.props.expense.store,
         total: this.props.expense.total,
@@ -42,7 +45,7 @@ export default class FormFields extends Component {
 
   handleItemChange(index, type, val) {
     let temp = [...this.state.items];
-    if(type === "item") {
+    if (type === "item") {
       temp[index].name = val;
     } else {
       temp[index].price = parseFloat(val).toFixed(2);
@@ -65,37 +68,54 @@ export default class FormFields extends Component {
     let inputType = (isKey ? "Item name" : "Price");
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
+    let tmpPrice = -1;
 
-    if(this.props.editActive && this.props.expense.items.length !== 0) {
+
+    if (this.props.editActive && this.props.expense.items.length !== 0) {
       for (let i = 0; i < this.state.pairCount; i++) {
-        inputElements.push(<TextInput 
-          placeholder={`${inputType} ${i}`} 
+        tmpPrice += 1;
+        inputElements.push(<TextInput
+          placeholder={`${inputType} ${i}`}
           defaultValue={
-            this.props.editActive && i < this.props.expense.items.length ? 
-              isKey ?  
+            this.props.editActive && i < this.props.expense.items.length ?
+              isKey ?
                 this.props.expense.items[i].name
                 : this.props.expense.items[i].price
               : ""}
           id={inputId}
-          name={i} 
-          key={`${inputId}-${i}`} 
+          name={i}
+          key={`${inputId}-${i}`}
           onChangeText={(text) => this.handleItemChange(i, inputId, text)}
         />);
+
       }
-    } else {
-      for (let i = 0; i < this.state.pairCount + 1; i++) {
-        inputElements.push(<TextInput 
-          placeholder={`${inputType} ${i + 1}`} 
-          id={inputId}
-          name={i} 
-          key={`${inputId}-${i}`} 
-          onChangeText={(text) => this.handleItemChange(i, inputId, text)}
-        />);
-      }
+      this.handleChange("total", tmpPrice);
+
     }
+
+    else {
+      for (let i = 0; i < this.state.pairCount + 1; i++) {
+        tmpPrice += 1;
+        inputElements.push(<TextInput
+          placeholder={`${inputType} ${i + 1}`}
+          id={inputId}
+          name={i}
+          key={`${inputId}-${i}`}
+          onChangeText={(text) => this.handleItemChange(i, inputId, text)}
+        />);
+      }
+      this.handleChange("total", tmpPrice);
+    }
+
+
 
     return inputElements;
   }
+
+
+
+
+
 
   addKeyValuePair() {
     let oldItems = [...this.state.items];
@@ -106,13 +126,14 @@ export default class FormFields extends Component {
     });
   }
 
+
   renderItemsEntry() {
     let entries = [1, 0];
     return (
       <React.Fragment key={"items-entry"}>
         <View style={styles.row}>
           {entries.map((x) => {
-            return ( 
+            return (
               <View key={x} style={styles.col}>
                 {this.generateKeyOrValueInputs(x)}
               </View>
@@ -129,14 +150,15 @@ export default class FormFields extends Component {
       </React.Fragment>
     );
   }
-  
+
   render() {
     return (
       <View style={styles.col}>
+
         {this.state.fields.map((f) => {
-          return(
+          return (
             f.id !== "items" ?
-              <TextInput 
+              <TextInput
                 key={f.id}
                 style={styles.input}
                 defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
@@ -149,9 +171,9 @@ export default class FormFields extends Component {
               this.renderItemsEntry()
           );
         })}
-        <CommonButton 
-          text={this.props.submitText ? this.props.submitText : "Submit"} 
-          onPress={this.addItemToDB.bind(this)}  
+        <CommonButton
+          text={this.props.submitText ? this.props.submitText : "Submit"}
+          onPress={this.addItemToDB.bind(this)}
         />
       </View>
     );
