@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import {View } from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
 
 class ManualAddScreen extends Component {
   constructor(props) {
@@ -24,16 +25,11 @@ class ManualAddScreen extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.handleGoBack.bind(this)}>
-          <Text>
-            Cancel
-          </Text>
-        </TouchableOpacity>
-        <FormFields submit={this.addExpense.bind(this)} />
-      </View>
-    );
+    return <View style={styles.manualadd}>
+      <Icon name={"arrow-back"} onPress={this.handleGoBack.bind(this)}>
+      </Icon>
+      <FormFields submit={this.addExpense.bind(this)}/>
+    </View>;
   }
 }
 
