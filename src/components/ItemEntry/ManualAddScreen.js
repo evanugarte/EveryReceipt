@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import {View } from "react-native";
+import {Button, View} from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
-import { Icon } from "react-native-elements";
 
 class ManualAddScreen extends Component {
   constructor(props) {
@@ -26,8 +25,8 @@ class ManualAddScreen extends Component {
 
   render() {
     return <View style={styles.manualadd}>
-      <Icon name={"arrow-back"} onPress={this.handleGoBack.bind(this)}>
-      </Icon>
+      <Button title="back" onPress={this.handleGoBack.bind(this)}>
+      </Button>
       <FormFields submit={this.addExpense.bind(this)}/>
     </View>;
   }

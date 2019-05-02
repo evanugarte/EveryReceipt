@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     height: null,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 50,
+    paddingTop: 100,
     paddingBottom: 50,
   },
   dropdown: {
