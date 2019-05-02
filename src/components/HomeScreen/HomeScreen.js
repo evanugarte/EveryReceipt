@@ -58,23 +58,60 @@ class HomeScreen extends React.Component {
       this.props.navigation.navigate("ManualAddScreen");
   }
 
+  handleCloudOCR = async (uri) => {
+    try {
+      let body = JSON.stringify({
+        requests: [
+          {
+            features: [
+              { type: "TEXT_DETECTION", maxResults: 10 },
+            ],
+            image: {
+              content: uri
+            }
+          }
+        ]
+      });
+      let response = await fetch(
+        "https://vision.googleapis.com/v1/images:annotate?key=" +
+          "API_KEY",
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: body
+        }
+      );
+      
+      let responseJson = response.json();
+      console.log(response);
+    } catch(err) {
+      // console.error(err);
+    }
+  }
+
   useCameraHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 2],
-      base64: false,
+      base64: true,
     });
     this.setState({ result });
+    setTimeout(() => {}, 2000);
+    this.handleCloudOCR(result.base64);
   };
   useLibraryHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [1, 2],
-      base64: false,
+      base64: true,
     });
     this.setState({ result });
+    this.handleCloudOCR(result.base64);
   };
 
   handlePress(btnId) {
