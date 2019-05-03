@@ -96,7 +96,7 @@ class HomeScreen extends React.Component {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [1, 2],
+      // aspect: [1, 2],
       base64: true,
     });
     this.setState({ result });
@@ -107,7 +107,7 @@ class HomeScreen extends React.Component {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [1, 2],
+      // aspect: [1, 2],
       base64: true,
     });
     this.setState({ result });
