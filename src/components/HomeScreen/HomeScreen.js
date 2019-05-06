@@ -1,5 +1,5 @@
 import React from "react";
-import {TouchableOpacity, Text, View, ScrollView} from "react-native";
+import { Modal, ActivityIndicator, View, ScrollView} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
@@ -15,7 +15,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: null,
+      loading: false,
       buttons: [
         {title: "Logout", onPress: this.logout.bind(this)},
         {title: "Profile", onPress: this.goToProfile.bind(this)},
@@ -84,12 +84,28 @@ class HomeScreen extends React.Component {
           body: body
         }
       );
-      /* _bodyInit."responses"[0]."textAnnotations"[0]."description" */
+      
       let test = JSON.stringify(response);
       test = 
         test.substring(
           test.lastIndexOf("\"text\\"), test.lastIndexOf("}"));
-      console.log(test, "  ", start, "  ", end); 
+      test = test.split("\\n");
+
+      let result = -1;
+      for(var i in test) {
+        console.log(test[i]);
+        if(test[i].toLowerCase().indexOf("total") !== -1 &&
+        test[i].toLowerCase().indexOf("subtotal") === -1) {
+          result = test[i].match(/\d+(?:\.\d+)?/g)[0];
+          break;
+        }
+      }
+      if(result !== -1) {
+        console.log(`total: ${result}`);
+      }
+      this.setState({
+        loading: false
+      });
     } catch(err) {
       // console.error(err);
     }
@@ -102,7 +118,9 @@ class HomeScreen extends React.Component {
       // aspect: [1, 2],
       base64: true,
     });
-    this.setState({ result });
+    this.setState({ 
+      loading: true
+    });
     setTimeout(() => {}, 2000);
     this.handleCloudOCR(result.base64);
   };
@@ -141,6 +159,20 @@ class HomeScreen extends React.Component {
               />
             );
           })}
+          {/* {this.state.loading ? 
+            <Modal
+              transparent={false}
+              animationType={"none"}
+              visible={this.state.loading}
+              onRequestClose={() => {}} >
+              <View style={styles.container}>
+                <View style={styles.activityIndicatorWrapper}>
+                  <ActivityIndicator
+                    animating={this.state.loading} />
+                </View>
+              </View>
+            </Modal> 
+            : null} */}
           <ScrollView>
             <ExpenseList
               expenses={expenses}
