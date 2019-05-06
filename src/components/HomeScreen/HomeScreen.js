@@ -64,7 +64,7 @@ class HomeScreen extends React.Component {
         requests: [
           {
             features: [
-              { type: "TEXT_DETECTION", maxResults: 10 },
+              { type: "DOCUMENT_TEXT_DETECTION", maxResults: 10 },
             ],
             image: {
               content: uri
@@ -74,7 +74,7 @@ class HomeScreen extends React.Component {
       });
       let response = await fetch(
         "https://vision.googleapis.com/v1/images:annotate?key=" +
-          "API_KEY",
+          "haha",
         {
           headers: {
             Accept: "application/json",
@@ -84,9 +84,12 @@ class HomeScreen extends React.Component {
           body: body
         }
       );
-      
-      let responseJson = response.json();
-      console.log(response);
+      /* _bodyInit."responses"[0]."textAnnotations"[0]."description" */
+      let test = JSON.stringify(response);
+      test = 
+        test.substring(
+          test.lastIndexOf("\"text\\"), test.lastIndexOf("}"));
+      console.log(test, "  ", start, "  ", end); 
     } catch(err) {
       // console.error(err);
     }
