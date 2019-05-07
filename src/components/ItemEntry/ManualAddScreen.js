@@ -24,11 +24,13 @@ class ManualAddScreen extends Component {
   }
 
   render() {
-    return <View style={styles.manualadd}>
-      <Button title="back" onPress={this.handleGoBack.bind(this)}>
-      </Button>
-      <FormFields submit={this.addExpense.bind(this)}/>
-    </View>;
+    return (
+      <View style={styles.container}>
+        <Button title="back" onPress={this.handleGoBack.bind(this)}>
+        </Button>
+        <FormFields submit={this.addExpense.bind(this)}/>
+      </View>
+    );
   }
 }
 

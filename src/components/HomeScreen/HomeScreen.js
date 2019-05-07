@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ActivityIndicator, View, ScrollView} from "react-native";
+import { Modal, Text, View, ScrollView} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
@@ -21,7 +21,8 @@ class HomeScreen extends React.Component {
         {title: "Logout", onPress: this.logout.bind(this)},
         {title: "Profile", onPress: this.goToProfile.bind(this)},
         {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
-      ]
+      ],
+      modalVisible: false
     };
   }
   componentDidMount() {
@@ -31,6 +32,11 @@ class HomeScreen extends React.Component {
     this.props.getExpenses();
   }
 
+  setModalVisible() {
+    this.setState({
+      modalVisible: !this.state.modalVisible
+    });
+  }
 
   handleDelete(id) {
     this.props.deleteExpense(id);
@@ -99,10 +105,10 @@ class HomeScreen extends React.Component {
         console.log(test[i]);
         if(test[i].toLowerCase().indexOf("total") !== -1 &&
         test[i].toLowerCase().indexOf("subtotal") === -1) {
-          console.log(test[i].match(/\d+(?:\.\d+)?/g));
+          console.log(test[i].match(/\d+\.\d+/g));
           let total = test[i].match(/\d+(?:\.\d+)?/g);
           if(total !== null) {
-            result = test[i].match(/\d+(?:\.\d+)?/g)[0];
+            result = total[0];
           }
           break;
         }
@@ -110,14 +116,10 @@ class HomeScreen extends React.Component {
       if(result !== -1) {
         console.log(`total: ${result}`);
       } else {
-        console.log("didn't work.");
-        
+        this.setModalVisible();
       }
       console.log("done.");
       
-      this.setState({
-        loading: false
-      });
     } catch(err) {
       // console.error(err);
     }
@@ -127,20 +129,14 @@ class HomeScreen extends React.Component {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      // aspect: [1, 2],
       base64: true,
     });
-    this.setState({ 
-      loading: true
-    });
-    setTimeout(() => {}, 2000);
     this.handleCloudOCR(result.base64);
   };
   useLibraryHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      // aspect: [1, 2],
       base64: true,
     });
     this.setState({ result });
@@ -171,20 +167,17 @@ class HomeScreen extends React.Component {
               />
             );
           })}
-          {/* {this.state.loading ? 
-            <Modal
-              transparent={false}
-              animationType={"none"}
-              visible={this.state.loading}
-              onRequestClose={() => {}} >
-              <View style={styles.container}>
-                <View style={styles.activityIndicatorWrapper}>
-                  <ActivityIndicator
-                    animating={this.state.loading} />
-                </View>
-              </View>
-            </Modal> 
-            : null} */}
+          <Modal
+            transparent={false}
+            animationType="slide"
+            visible={this.state.modalVisible}
+            onRequestClose={() => { this.setModalVisible(); }}>
+            <View style={styles.container}>
+              <Text style={styles.logoText} >
+                Sorry, we coulnd't get anything from your scan!
+              </Text>
+            </View>
+          </Modal> 
           <ScrollView>
             <ExpenseList
               expenses={expenses}
