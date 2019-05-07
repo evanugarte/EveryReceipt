@@ -22,7 +22,9 @@ class HomeScreen extends React.Component {
         {title: "Profile", onPress: this.goToProfile.bind(this)},
         {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
       ],
-      modalVisible: false
+      modalVisible: false,
+      valueParsed: false,
+      parsedObj: { }
     };
   }
   componentDidMount() {
@@ -93,6 +95,8 @@ class HomeScreen extends React.Component {
           body: body
         }
       );
+
+      let store = "";
       
       let test = JSON.stringify(response);
       test = 
@@ -102,19 +106,48 @@ class HomeScreen extends React.Component {
 
       let result = -1;
       for(var i in test) {
-        console.log(test[i]);
         if(test[i].toLowerCase().indexOf("total") !== -1 &&
         test[i].toLowerCase().indexOf("subtotal") === -1) {
-          console.log(test[i].match(/\d+\.\d+/g));
           let total = test[i].match(/\d+(?:\.\d+)?/g);
           if(total !== null) {
             result = total[0];
           }
           break;
         }
+        if (test[i].toLowerCase().includes("walmart")) {
+          store = "Walmart";
+        } else if (test[i].toLowerCase().includes("target")) {
+          store = "Target";
+        } else if (test[i].toLowerCase().includes("walgreens")) {
+          store = "Walgreens";
+        }
       }
-      if(result !== -1) {
-        console.log(`total: ${result}`);
+      if(result !== -1 || store !== "") {
+        const parsedObj = {
+          total: result,
+          store: store
+        };
+        this.setState({
+          parsedObj
+        });
+        setTimeout(() => { }, 1000);
+        this.setState({
+          valueParsed: true
+        });
+        /**
+         * TODO: Navigate to Manual Addscreen, with a parameter to
+         * specify we are sending a text OCR value. From Manual add
+         * screen we will go to form fields with appropraite props.
+         * 
+         * work is to get the naviagtion params from HomeScreen.
+         */
+        console.log("time to navigate, store is ", store);
+        this.handleAddingOCRItem(
+          {
+            total: result === -1 ? "" : result,
+            store: store
+          }
+        );
       } else {
         this.setModalVisible();
       }
@@ -122,6 +155,16 @@ class HomeScreen extends React.Component {
       
     } catch(err) {
       // console.error(err);
+    }
+  }
+
+  handleAddingOCRItem(item) {
+    if(this.state.valueParsed) {
+      console.log(`OH MY GOD ${item.total}, ${item.store}`);
+      
+      this.props.navigation.navigate("ManualAddScreen", {
+        ocrValue: item
+      });
     }
   }
 

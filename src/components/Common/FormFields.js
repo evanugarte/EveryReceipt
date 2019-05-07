@@ -20,6 +20,7 @@ export default class FormFields extends Component {
       ],
       items: [{}]
     };
+    this.oldProps = null;
   }
 
   handleChange(id, val) {
@@ -28,16 +29,28 @@ export default class FormFields extends Component {
     });
   }
 
-  componentDidMount() {
-    if(this.props.editActive && this.props.expense.items.length !== 0)
-    {
-      this.setState({
-        store: this.props.expense.store,
-        total: this.props.expense.total,
-        items: this.props.expense.items,
-        pairCount: this.props.expense.items.length
-      });
+  componentDidUpdate() {
+    console.log("please", this.props.editActive);
+    
+    if(this.oldProps !== this.props) {
+      if(this.props.editActive)
+      {
+        console.log("edit active!");
+        
+        console.log(`store in form field: ${this.props.expense.store}`);
+        console.log(`total in form field: ${this.props.expense.total}`);
+        this.setState({
+          store: this.props.expense.store,
+          total: this.props.expense.total,
+          items: this.props.expense.items.length !== 0 ? this.props.expense.items :
+            [{}],
+          pairCount: this.props.expense.items.length !== 0 ?
+            this.props.expense.items.length :
+            0
+        });
+      }
     }
+    this.oldProps = this.props;
   }
 
   handleItemChange(index, type, val) {
@@ -58,6 +71,8 @@ export default class FormFields extends Component {
       items: this.state.items,
       total: parseFloat(this.state.total).toFixed(2)
     };
+    console.log(` ADDED TIME ${this.state.store}, ${this.state.total}`);
+    
     this.props.submit(itemObj);
   }
 

@@ -9,11 +9,29 @@ class ManualAddScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      items: [],
-      total: 0
+      ocrActive: false
     };
+    this.ocrItem = {};
   };
+
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
+    const ocrValue = params ? params.ocrValue : null;
+    if(ocrValue !== null) {
+      this.setState({
+        ocrActive: true,
+      });
+      let expense = {
+        store: ocrValue.store,
+        items: [],
+        total: ocrValue.total
+      };
+      this.ocrItem = expense;
+      console.log(`store in manual add: ${expense.store}`);
+      console.log(`total in manual add: ${expense.total}`);
+      
+    }
+  }
 
   handleGoBack() {
     this.props.navigation.navigate("HomeScreen");
@@ -28,7 +46,14 @@ class ManualAddScreen extends Component {
       <View style={styles.container}>
         <Button title="back" onPress={this.handleGoBack.bind(this)}>
         </Button>
-        <FormFields submit={this.addExpense.bind(this)}/>
+        {this.state.ocrActive ? 
+          <FormFields 
+            editActive={true}
+            expense={this.ocrItem}
+            submit={this.addExpense.bind(this)}/>
+          :
+          <FormFields submit={this.addExpense.bind(this)}/>
+        }
       </View>
     );
   }
