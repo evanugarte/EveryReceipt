@@ -8,6 +8,7 @@ import { styles } from "../Common/styles";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+import { key } from "../../config/api_key";
 import { ImagePicker, Permissions, Constants } from "expo";
 
 
@@ -76,7 +77,7 @@ class HomeScreen extends React.Component {
       });
       let response = await fetch(
         "https://vision.googleapis.com/v1/images:annotate?key=" +
-          "haha",
+          key,
         {
           headers: {
             Accept: "application/json",
