@@ -20,7 +20,6 @@ export default class FormFields extends Component {
       ],
       items: [{}]
     };
-    this.oldProps = null;
   }
 
   handleChange(id, val) {
@@ -29,28 +28,29 @@ export default class FormFields extends Component {
     });
   }
 
-  componentDidUpdate() {
-    console.log("please", this.props.editActive);
-    
-    if(this.oldProps !== this.props) {
-      if(this.props.editActive)
-      {
-        console.log("edit active!");
-        
-        console.log(`store in form field: ${this.props.expense.store}`);
-        console.log(`total in form field: ${this.props.expense.total}`);
-        this.setState({
-          store: this.props.expense.store,
-          total: this.props.expense.total,
-          items: this.props.expense.items.length !== 0 ? this.props.expense.items :
-            [{}],
-          pairCount: this.props.expense.items.length !== 0 ?
-            this.props.expense.items.length :
-            0
-        });
-      }
+  componentDidMount() {
+    this.ensureValesSaved();
+  }
+
+  ensureValesSaved() {
+    if(this.props.editActive && this.props.expense.items.length !== 0)
+    { 
+      console.log(this.props.expense.items.length);
+      
+      this.setState({
+        store: this.props.expense.store,
+        total: this.props.expense.total,
+        items: this.props.expense.items,
+        pairCount: this.props.expense.items.length
+      });
     }
-    this.oldProps = this.props;
+    else if(this.props.fromOCR)
+    {
+      this.setState({
+        store: this.props.expense.store,
+        total: this.props.expense.total
+      });
+    }
   }
 
   handleItemChange(index, type, val) {
@@ -71,8 +71,6 @@ export default class FormFields extends Component {
       items: this.state.items,
       total: parseFloat(this.state.total).toFixed(2)
     };
-    console.log(` ADDED TIME ${this.state.store}, ${this.state.total}`);
-    
     this.props.submit(itemObj);
   }
 
@@ -125,17 +123,15 @@ export default class FormFields extends Component {
     let entries = [1, 0];
     return (
       <React.Fragment key={"items-entry"}>
-        <ScrollView>
-          <View style={styles.row}>
-            {entries.map((x) => {
-              return ( 
-                <View key={x} style={styles.col}>
-                  {this.generateKeyOrValueInputs(x)}
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
+        <View style={styles.row}>
+          {entries.map((x) => {
+            return ( 
+              <View key={x} style={styles.col}>
+                {this.generateKeyOrValueInputs(x)}
+              </View>
+            );
+          })}
+        </View>
         <View style={styles.row}>
           <AddItemButton
             onPress={this.addKeyValuePair.bind(this)}
@@ -156,7 +152,8 @@ export default class FormFields extends Component {
               <TextInput 
                 key={f.id}
                 style={styles.input}
-                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
+                defaultValue={this.props.editActive || this.props.fromOCR
+                  ? this.props.expense[f.id] : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}

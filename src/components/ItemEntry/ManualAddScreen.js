@@ -13,23 +13,33 @@ class ManualAddScreen extends Component {
     };
     this.ocrItem = {};
   };
-
-  componentDidMount() {
+  
+  renderOCRFields() {
+    let ocrActive = false;
     const { params } = this.props.navigation.state;
     const ocrValue = params ? params.ocrValue : null;
     if(ocrValue !== null) {
-      this.setState({
-        ocrActive: true,
-      });
       let expense = {
         store: ocrValue.store,
         items: [],
         total: ocrValue.total
       };
       this.ocrItem = expense;
-      console.log(`store in manual add: ${expense.store}`);
-      console.log(`total in manual add: ${expense.total}`);
-      
+      ocrActive = true;
+    }
+
+    if (ocrActive) {
+      return (
+        <FormFields 
+          fromOCR={true}
+          editActive={false}
+          expense={this.ocrItem}
+          submit={this.addExpense.bind(this)}/>
+      );
+    } else {
+      return (
+        <FormFields submit={this.addExpense.bind(this)}/>
+      );
     }
   }
 
@@ -46,14 +56,7 @@ class ManualAddScreen extends Component {
       <View style={styles.container}>
         <Button title="back" onPress={this.handleGoBack.bind(this)}>
         </Button>
-        {this.state.ocrActive ? 
-          <FormFields 
-            editActive={true}
-            expense={this.ocrItem}
-            submit={this.addExpense.bind(this)}/>
-          :
-          <FormFields submit={this.addExpense.bind(this)}/>
-        }
+        {this.renderOCRFields()}
       </View>
     );
   }

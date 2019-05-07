@@ -96,7 +96,7 @@ class HomeScreen extends React.Component {
         }
       );
 
-      let store = "";
+      let store = null;
       
       let test = JSON.stringify(response);
       test = 
@@ -122,11 +122,15 @@ class HomeScreen extends React.Component {
           store = "Walgreens";
         }
       }
-      if(result !== -1 || store !== "") {
+      console.log(`RESULT: ${result}, store`);
+      
+      if(result !== -1 || store !== null) {
+        
         const parsedObj = {
-          total: result,
-          store: store
+          total: result === -1 ? "" : result,
+          store: store === null ? "" : store
         };
+        console.log(parsedObj.total, parsedObj.store);
         this.setState({
           parsedObj
         });
@@ -134,25 +138,10 @@ class HomeScreen extends React.Component {
         this.setState({
           valueParsed: true
         });
-        /**
-         * TODO: Navigate to Manual Addscreen, with a parameter to
-         * specify we are sending a text OCR value. From Manual add
-         * screen we will go to form fields with appropraite props.
-         * 
-         * work is to get the naviagtion params from HomeScreen.
-         */
-        console.log("time to navigate, store is ", store);
-        this.handleAddingOCRItem(
-          {
-            total: result === -1 ? "" : result,
-            store: store
-          }
-        );
+        this.handleAddingOCRItem(parsedObj);
       } else {
         this.setModalVisible();
       }
-      console.log("done.");
-      
     } catch(err) {
       // console.error(err);
     }
@@ -160,8 +149,6 @@ class HomeScreen extends React.Component {
 
   handleAddingOCRItem(item) {
     if(this.state.valueParsed) {
-      console.log(`OH MY GOD ${item.total}, ${item.store}`);
-      
       this.props.navigation.navigate("ManualAddScreen", {
         ocrValue: item
       });
