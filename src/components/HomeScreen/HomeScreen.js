@@ -122,7 +122,6 @@ class HomeScreen extends React.Component {
           store = "Walgreens";
         }
       }
-      console.log(`RESULT: ${result}, store`);
       
       if(result !== -1 || store !== null) {
         
@@ -130,7 +129,6 @@ class HomeScreen extends React.Component {
           total: result === -1 ? "" : result,
           store: store === null ? "" : store
         };
-        console.log(parsedObj.total, parsedObj.store);
         this.setState({
           parsedObj
         });

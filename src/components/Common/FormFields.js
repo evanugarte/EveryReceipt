@@ -35,8 +35,6 @@ export default class FormFields extends Component {
   ensureValesSaved() {
     if(this.props.editActive && this.props.expense.items.length !== 0)
     { 
-      console.log(this.props.expense.items.length);
-      
       this.setState({
         store: this.props.expense.store,
         total: this.props.expense.total,
