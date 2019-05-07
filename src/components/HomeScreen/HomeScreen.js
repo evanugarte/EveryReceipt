@@ -59,6 +59,8 @@ class HomeScreen extends React.Component {
   }
 
   handleCloudOCR = async (uri) => {
+    if (typeof uri === "undefined") return;
+    
     try {
       let body = JSON.stringify({
         requests: [
@@ -96,13 +98,22 @@ class HomeScreen extends React.Component {
         console.log(test[i]);
         if(test[i].toLowerCase().indexOf("total") !== -1 &&
         test[i].toLowerCase().indexOf("subtotal") === -1) {
-          result = test[i].match(/\d+(?:\.\d+)?/g)[0];
+          console.log(test[i].match(/\d+(?:\.\d+)?/g));
+          let total = test[i].match(/\d+(?:\.\d+)?/g);
+          if(total !== null) {
+            result = test[i].match(/\d+(?:\.\d+)?/g)[0];
+          }
           break;
         }
       }
       if(result !== -1) {
         console.log(`total: ${result}`);
+      } else {
+        console.log("didn't work.");
+        
       }
+      console.log("done.");
+      
       this.setState({
         loading: false
       });
