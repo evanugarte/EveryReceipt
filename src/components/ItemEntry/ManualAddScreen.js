@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import {Button, View, Text, TouchableOpacity} from "react-native";
+import { View, Text } from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome";
 import CommonButton from "../Common/CommonButton";
 
 
