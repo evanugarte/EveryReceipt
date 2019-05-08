@@ -1,8 +1,7 @@
 language: node_js
 node_js:
- - "stable"
+ - "11"
 install:
- - npm update && npm cache clear
  - npm install
  - npm install -g expo-cli
 script:
