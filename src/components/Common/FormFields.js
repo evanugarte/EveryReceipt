@@ -55,9 +55,7 @@ export default class FormFields extends Component {
     }
   }
 
-  handleItemChange(index, type, val) {
-    console.log(this.state.items, index);
-    
+  handleItemChange(index, type, val) {  
     let temp = [...this.state.items];
     if(type === "item") {
       temp[index].name = val;
