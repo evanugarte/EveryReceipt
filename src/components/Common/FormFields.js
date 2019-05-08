@@ -64,21 +64,31 @@ export default class FormFields extends Component {
   }
 
   addItemToDB() {
-    const { items } = this.state;
+    const { items, store, total } = this.state;
     let expenseItems = [];
+    let valid = true;
     for(let i = 0; i < items.length; i++) {
-      console.log(items[i].name)
       if(typeof items[i].name !== "undefined" && 
         typeof items[i].price !== "undefined") {
         expenseItems.push(items[i]);
       }
     }
-    let itemObj = {
-      store: this.state.store,
-      items: expenseItems,
-      total: parseFloat(this.state.total).toFixed(2)
-    };
-    this.props.submit(itemObj);
+    if(typeof store === "undefined" || store === "" 
+    || total === 0 || total === "") {
+      valid = false;
+    }
+
+    if(valid) {
+      let itemObj = {
+        store: this.state.store,
+        items: expenseItems,
+        total: parseFloat(this.state.total).toFixed(2)
+      };
+      this.props.submit(itemObj);
+    } else {
+      this.props.error();
+    }
+
   }
 
   generateKeyOrValueInputs(isKey) {

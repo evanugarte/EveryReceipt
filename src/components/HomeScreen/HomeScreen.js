@@ -140,9 +140,7 @@ class HomeScreen extends React.Component {
       } else {
         this.setModalVisible();
       }
-    } catch(err) {
-      // console.error(err);
-    }
+    } catch(err) { }
   }
 
   handleAddingOCRItem(item) {

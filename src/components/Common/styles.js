@@ -70,7 +70,10 @@ export const styles = StyleSheet.create({
     marginHorizontal: 25
   },
   expensePadding: {
-    width: Dimensions.get("window").width - 135
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+    width: Dimensions.get("window").width - 85
   },
   logoContainer: {
     alignItems: "center",
