@@ -5,10 +5,36 @@ import { styles } from "../Common/styles";
 export default class ExpenseItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      displayOnly: false
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      displayOnly: typeof this.props.displayOnly !== "undefined"
+    });
+  }  
+
+  renderDeleteButton(item) {
+    if(this.state.displayOnly) {
+      return;
+    } else {
+      return (
+        <View style={styles.deleteBtn}>
+          <Button title="x" color="#ff0000"
+            onPress={() => {  
+              this.props.handleDelete(item.id);
+            }} /> 
+        </View>
+      );
+    }
   }
 
   handleEdit(item) {
-    this.props.toggleEdit(item);
+    if(!this.state.displayOnly) {
+      this.props.toggleEdit(item);
+    }
   }
 
   render() {
@@ -42,12 +68,7 @@ export default class ExpenseItem extends React.Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.deleteBtn}>
-          <Button title="x" color="#ff0000"
-            onPress={() => {  
-              this.props.handleDelete(item.id);
-            }} /> 
-        </View>
+        {this.renderDeleteButton(item)}
       </View>
     );
   }
