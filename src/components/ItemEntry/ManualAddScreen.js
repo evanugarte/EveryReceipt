@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Button, View} from "react-native";
+import { Button, View, Text } from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
@@ -9,11 +9,49 @@ class ManualAddScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      items: [],
-      total: 0
+      ocrActive: false,
+      error: false
     };
+    this.ocrItem = {};
   };
+
+  showError() {
+    this.setState({
+      error: true
+    });
+  }
+  
+  renderOCRFields() {
+    let ocrActive = false;
+    const { params } = this.props.navigation.state;
+    const ocrValue = params ? params.ocrValue : null;
+    if(ocrValue !== null) {
+      let expense = {
+        store: ocrValue.store,
+        items: [],
+        total: ocrValue.total
+      };
+      this.ocrItem = expense;
+      ocrActive = true;
+    }
+
+    if (ocrActive) {
+      return (
+        <FormFields 
+          fromOCR={true}
+          editActive={false}
+          expense={this.ocrItem}
+          error={this.showError.bind(this)}
+          submit={this.addExpense.bind(this)}/>
+      );
+    } else {
+      return (
+        <FormFields 
+          error={this.showError.bind(this)}
+          submit={this.addExpense.bind(this)}/>
+      );
+    }
+  }
 
   handleGoBack() {
     this.props.navigation.navigate("HomeScreen");
@@ -24,11 +62,14 @@ class ManualAddScreen extends Component {
   }
 
   render() {
-    return <View style={styles.manualadd}>
-      <Button title="back" onPress={this.handleGoBack.bind(this)}>
-      </Button>
-      <FormFields submit={this.addExpense.bind(this)}/>
-    </View>;
+    return (
+      <View style={styles.container}>
+        <Button title="back" onPress={this.handleGoBack.bind(this)}>
+        </Button>
+        {this.renderOCRFields()}
+        <Text style={{ color: "red" }}>{this.state.error ? "Please enter valid fields." : ""}</Text>
+      </View>
+    );
   }
 }
 

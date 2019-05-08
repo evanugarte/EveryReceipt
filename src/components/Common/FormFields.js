@@ -29,18 +29,33 @@ export default class FormFields extends Component {
   }
 
   componentDidMount() {
-    if(this.props.editActive && this.props.expense.items.length !== 0)
+    this.ensureValesSaved();
+  }
+
+  ensureValesSaved() {
+    
+    let { expense } = this.props;
+    if(this.props.editActive)
+    { 
+      let count = expense.items.length;
+      let items = expense.items.length ? expense.items : [{}];
+      this.setState({
+        store: expense.store,
+        total: expense.total,
+        items: items,
+        pairCount: count
+      });
+    }
+    else if(this.props.fromOCR)
     {
       this.setState({
-        store: this.props.expense.store,
-        total: this.props.expense.total,
-        items: this.props.expense.items,
-        pairCount: this.props.expense.items.length
+        store: expense.store,
+        total: expense.total
       });
     }
   }
 
-  handleItemChange(index, type, val) {
+  handleItemChange(index, type, val) {  
     let temp = [...this.state.items];
     if(type === "item") {
       temp[index].name = val;
@@ -53,12 +68,31 @@ export default class FormFields extends Component {
   }
 
   addItemToDB() {
-    let itemObj = {
-      store: this.state.store,
-      items: this.state.items,
-      total: parseFloat(this.state.total).toFixed(2)
-    };
-    this.props.submit(itemObj);
+    const { items, store, total } = this.state;
+    let expenseItems = [];
+    let valid = true;
+    for(let i = 0; i < items.length; i++) {
+      if(typeof items[i].name !== "undefined" && 
+        typeof items[i].price !== "undefined") {
+        expenseItems.push(items[i]);
+      }
+    }
+    if(typeof store === "undefined" || store === "" 
+    || total === 0 || total === "") {
+      valid = false;
+    }
+
+    if(valid) {
+      let itemObj = {
+        store: this.state.store,
+        items: expenseItems,
+        total: parseFloat(this.state.total).toFixed(2)
+      };
+      this.props.submit(itemObj);
+    } else {
+      this.props.error();
+    }
+
   }
 
   generateKeyOrValueInputs(isKey) {
@@ -110,17 +144,15 @@ export default class FormFields extends Component {
     let entries = [1, 0];
     return (
       <React.Fragment key={"items-entry"}>
-        <ScrollView>
-          <View style={styles.row}>
-            {entries.map((x) => {
-              return ( 
-                <View key={x} style={styles.col}>
-                  {this.generateKeyOrValueInputs(x)}
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
+        <View style={styles.row}>
+          {entries.map((x) => {
+            return ( 
+              <View key={x} style={styles.col}>
+                {this.generateKeyOrValueInputs(x)}
+              </View>
+            );
+          })}
+        </View>
         <View style={styles.row}>
           <AddItemButton
             onPress={this.addKeyValuePair.bind(this)}
@@ -141,7 +173,8 @@ export default class FormFields extends Component {
               <TextInput 
                 key={f.id}
                 style={styles.input}
-                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
+                defaultValue={this.props.editActive || this.props.fromOCR
+                  ? this.props.expense[f.id] : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
