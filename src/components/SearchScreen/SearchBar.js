@@ -6,7 +6,6 @@ import {
   View, TouchableOpacity
 } from "react-native";
 import { styles } from "../Common/styles";
-import CommonButton from "../Common/CommonButton";
 
 export default class SearchBar extends React.Component {
   constructor(props) {
