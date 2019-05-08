@@ -64,9 +64,18 @@ export default class FormFields extends Component {
   }
 
   addItemToDB() {
+    const { items } = this.state;
+    let expenseItems = [];
+    for(let i = 0; i < items.length; i++) {
+      console.log(items[i].name)
+      if(typeof items[i].name !== "undefined" && 
+        typeof items[i].price !== "undefined") {
+        expenseItems.push(items[i]);
+      }
+    }
     let itemObj = {
       store: this.state.store,
-      items: this.state.items,
+      items: expenseItems,
       total: parseFloat(this.state.total).toFixed(2)
     };
     this.props.submit(itemObj);

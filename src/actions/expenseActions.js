@@ -143,7 +143,7 @@ export const getTotalPrice = () => {
           total += parseFloat(curr.total);
         });
       }).then(() => {
-        dispatch( { type: GET_TOTAL_PRICE, payload: (total).toFixed(2) } );
+        dispatch( { type: GET_TOTAL_PRICE, payload: total.toFixed(2) } );
       });
   };
 };

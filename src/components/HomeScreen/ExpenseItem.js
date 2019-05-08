@@ -48,9 +48,9 @@ export default class ExpenseItem extends React.Component {
             </Text>
             {
               typeof item.items.length === 0 ? <React.Fragment/> :
-                item.items.map((x) => {
+                item.items.map((x, key) => {
                   return (
-                    <React.Fragment key={Math.random(100)}>
+                    <React.Fragment key={key}>
                       {x.name !== "" && x.price !== "" 
                         && typeof x.name !== "undefined" 
                         && typeof x.price !== "undefined"?

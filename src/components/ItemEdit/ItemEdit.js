@@ -61,6 +61,13 @@ class ItemEdit extends React.Component {
 
   renderItemsFromExpense(itemList) {
     let index = 1;
+    if(itemList.length === 0) {
+      return (
+        <React.Fragment>
+          <Text style={styles.itemSubText}>No Items.</Text>
+        </React.Fragment>
+      );
+    }
     return (
       <React.Fragment>
         {itemList.map((item) => {
