@@ -121,7 +121,7 @@ export default class FormFields extends Component {
       let itemObj = {
         timestamp: Date.now(),
         store: this.state.store,
-        tmpItems: this.state.items,
+        tmpItems: this.state.items
         items: expenseItems,
         total: parseFloat(this.total).toFixed(2)
         // total: parseFloat(this.state.total).toFixed(2)
@@ -150,7 +150,7 @@ export default class FormFields extends Component {
 
     if (this.props.editActive && this.state.items !== 0) {
       console.log("frop in first loop")
-      console.log(this.props.expense.items)
+      console.log(expenseItems)
       this.editOn = true;
       for (let i = 0; i < this.state.pairCount; i++) {
         inputElements.push(<TextInput
