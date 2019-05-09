@@ -121,7 +121,6 @@ export default class FormFields extends Component {
       let itemObj = {
         timestamp: Date.now(),
         store: this.state.store,
-        tmpItems: this.state.items
         items: expenseItems,
         total: parseFloat(this.total).toFixed(2)
         // total: parseFloat(this.state.total).toFixed(2)
