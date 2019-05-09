@@ -41,11 +41,11 @@ export default class FormFields extends Component {
   }
 
   handleChange(id, val) {
-    for (let i = 0; i < this.state.fields.length; i++) {
-      if (id === "store") {
-        this.state.fields[i].value = val;
-      }
-    }
+    // for (let i = 0; i < this.state.fields.length; i++) {
+    //   if (id === "store") {
+    //     this.state.fields[i].value = val;
+    //   }
+    // }
     if (id === "total") {
       this.total = val;
       this.manualInput = true;
@@ -139,7 +139,7 @@ export default class FormFields extends Component {
 
     if (this.props.editActive && this.props.expense.items.length !== 0) {
       this.editOn = true;
-      console.log(this.state.items)
+
       for (let i = 0; i < this.state.pairCount; i++) {
 
         inputElements.push(<TextInput
@@ -253,7 +253,8 @@ export default class FormFields extends Component {
                   underlineColorAndroid="transparent"
                   placeholder={f.name}
                   onChangeText={(text) => this.handleChange(f.id, text)}
-                  value={f.value} />
+                // value={f.value} 
+                />
                 :
                 this.renderItemsEntry()
           );
