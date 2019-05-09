@@ -44,9 +44,14 @@ export default class FormFields extends Component {
 
   handleChange(id, val) {
     for (let i = 0; i < this.state.fields.length; i++) {
-      if (id === "store") {
+      if (id === "store" && this.state.fields[i].id === id) {
         this.state.fields[i].value = val;
+      } else {
+        if (id === "total" && this.state.fields[i].id === id) {
+          this.state.fields[i].value = val;
+        }
       }
+
     }
     if (id === "total") {
       this.total = val;
@@ -102,7 +107,31 @@ export default class FormFields extends Component {
 
   }
 
+  // addItemToDB() {
+  //   let itemObj = {
+  //     store: this.state.store,
+  //     items: this.state.items,
+  //     total: parseFloat(this.total).toFixed(2)
+  //     // total: parseFloat(this.state.total).toFixed(2)
+  //   };
+
+  //   this.props.submit(itemObj);
+
+  //   this.editOn ? msg = "Receipt modified" : msg = "Receipt added to your list";
+  //   Alert.alert(
+  //     "Success!",
+  //     msg,
+  //     [
+  //       { text: "OK", onPress: "" },
+  //     ],
+  //     { cancelable: false }
+  //   );
+
+  //   this.resetForm();
+  // }
   addItemToDB() {
+
+    console.log("addin to DB", this.state.total, this.total);
     const { items, store, total } = this.state;
     let expenseItems = [];
     let valid = true;
@@ -126,6 +155,7 @@ export default class FormFields extends Component {
         // total: parseFloat(this.state.total).toFixed(2)
       };
       this.props.submit(itemObj);
+      this.resetForm();
     } else {
       this.props.error();
     }
@@ -133,28 +163,21 @@ export default class FormFields extends Component {
   }
 
   generateKeyOrValueInputs(isKey) {
-    console.log("call generate")
-    // console.log(this.state.items)
+
     let inputType = (isKey ? "Item name" : "Price");
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
     let tmpPrice = 0;
 
-    // console.log("this.props.editActive", this.props.editActive)
-    // console.log("this.props.expense.items.length", this.props.expense.items.length)
-    if (this.props.editActive) {
-      this.editOn = true;
-    }
-    // if (this.props.editActive && this.props.expense.items.length !== 0) {
 
-    if (this.props.editActive && this.state.items !== 0) {
-      console.log("frop in first loop")
-      console.log(expenseItems)
+    if (this.props.editActive && this.props.expense.items.length !== 0) {
       this.editOn = true;
+
       for (let i = 0; i < this.state.pairCount; i++) {
+
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i}`}
-          defaultValue={
+          defaultValue={ //sets the names and prices of the existing entries
             this.props.editActive && i < this.props.expense.items.length ?
               isKey ?
                 this.props.expense.items[i].name
@@ -165,11 +188,12 @@ export default class FormFields extends Component {
           key={`${inputId}-${i}`}
           onChangeText={(text) => this.handleItemChange(i, inputId, text)}
         />);
+
+
       }
     } else {
       for (let i = 0; i < this.state.pairCount + 1; i++) {
-        console.log("drop in second  loop")
-        console.log(this.state.items)
+
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i + 1}`}
           id={inputId}
@@ -182,51 +206,34 @@ export default class FormFields extends Component {
     }
 
 
-    //updating the name of the total field aka updating UI
-
-    // if (this.manualInput === false) {
-    //   if (inputId === "price") {
-    //     for (let i = 0; i < this.state.items.length; i++) {
-    //       tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
-    //     }
-    //     this.total = tmpPrice;
-    //     for (i = 0; i < this.state.fields.length; i++) {
-    //       if (this.state.fields[i].id === "total") {
-    //         this.total ? this.state.fields[i].name = this.total.toString() : "";
-    //       }
-    //       if (this.editOn === true && this.state.fields[i].id === "store") {
-    //         console.log("here", this.state.store)
-    //         this.state.fields[i].name = this.state.store;
-
-    //       }
-    //     }
-    //   }
-    // }
 
     if (this.editOn === true) {
-      console.log("if (this.editOn === true)")
-      // console.log(this.total, this.state.total)
-      this.total ? this.state.total = this.total : "";
+      console.log("editOn", this.state.total, this.total);
+      this.total ? this.props.expense.total = this.total : "";
     }
-    if (!this.manualInput) {
 
+    //updating the name of the total field aka updating UI
+
+    if (this.manualInput === false) {
       if (inputId === "price") {
         for (let i = 0; i < this.state.items.length; i++) {
           tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
         }
         this.total = tmpPrice;
-        // console.log(this.total)
         for (i = 0; i < this.state.fields.length; i++) {
           if (this.state.fields[i].id === "total") {
-            console.log("here")
-            console.log(this.total, this.state.total)
-            this.total ? this.state.fields[i].name = this.total.toString() : "";
-
+            console.log("updating", this.state.total, this.total);
+            this.total ? this.state.fields[i].name = this.total.toString() : this.state.fields[i].name = this.state.total.toString();
+            // this.state.fields[i].value = this.state.fields[i].name;
+            this.total ? this.state.fields[i].value = this.total.toString() : "";
           }
+          if (this.editOn === true && this.state.fields[i].id === "store") {
 
+            this.state.fields[i].value = this.props.expense.store;
+          }
         }
-
       }
+      // this.total ? this.state.total = this.total : "";
     }
 
     return inputElements;
@@ -299,7 +306,7 @@ export default class FormFields extends Component {
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
                 onChangeText={(text) => this.handleChange(f.id, text)}
-              // value={this.total}
+                value={f.value}
 
               />
               : f.id === "store" ?
