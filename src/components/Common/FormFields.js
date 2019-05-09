@@ -21,7 +21,8 @@ export default class FormFields extends Component {
         { name: "Items", id: "items" },
         { name: "Total Amount", id: "total", value: "" },
       ],
-      items: [{}]
+      items: [{}],
+      tmpItems: [{}]
     };
   }
 
@@ -120,6 +121,7 @@ export default class FormFields extends Component {
       let itemObj = {
         timestamp: Date.now(),
         store: this.state.store,
+        tmpItems: this.state.items,
         items: expenseItems,
         total: parseFloat(this.total).toFixed(2)
         // total: parseFloat(this.state.total).toFixed(2)
@@ -144,9 +146,11 @@ export default class FormFields extends Component {
     if (this.props.editActive) {
       this.editOn = true;
     }
-    if (this.props.editActive && this.props.expense.items.length !== 0) {
-      // if (this.props.editActive && this.state.items !== 0) {
+    // if (this.props.editActive && this.props.expense.items.length !== 0) {
+
+    if (this.props.editActive && this.state.items !== 0) {
       console.log("frop in first loop")
+      console.log(this.props.expense.items)
       this.editOn = true;
       for (let i = 0; i < this.state.pairCount; i++) {
         inputElements.push(<TextInput
@@ -165,7 +169,8 @@ export default class FormFields extends Component {
       }
     } else {
       for (let i = 0; i < this.state.pairCount + 1; i++) {
-        console.log("frop in second  loop")
+        console.log("drop in second  loop")
+        console.log(this.state.items)
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i + 1}`}
           id={inputId}
@@ -175,11 +180,8 @@ export default class FormFields extends Component {
           defaultValue={inputId === "item" ? this.state.items[i].name : this.state.items[i].price}
         />);
       }
-    } if (this.editOn === true) {
-      console.log("if (this.editOn === true)")
-      console.log(this.total)
-      this.total ? this.state.total = this.total : "";
     }
+
 
     //updating the name of the total field aka updating UI
 
@@ -202,7 +204,13 @@ export default class FormFields extends Component {
     //   }
     // }
 
+    if (this.editOn === true) {
+      console.log("if (this.editOn === true)")
+      // console.log(this.total, this.state.total)
+      this.total ? this.state.total = this.total : "";
+    }
     if (!this.manualInput) {
+
       if (inputId === "price") {
         for (let i = 0; i < this.state.items.length; i++) {
           tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
@@ -211,7 +219,10 @@ export default class FormFields extends Component {
         // console.log(this.total)
         for (i = 0; i < this.state.fields.length; i++) {
           if (this.state.fields[i].id === "total") {
+            console.log("here")
+            console.log(this.total, this.state.total)
             this.total ? this.state.fields[i].name = this.total.toString() : "";
+
           }
 
         }
