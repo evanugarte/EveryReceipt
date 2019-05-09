@@ -5,6 +5,7 @@ import CommonButton from "./CommonButton";
 import AddItemButton from "../ItemEntry/AddItemButton";
 
 
+
 export default class FormFields extends Component {
   constructor(props) {
     super(props);
@@ -41,11 +42,11 @@ export default class FormFields extends Component {
   }
 
   handleChange(id, val) {
-    // for (let i = 0; i < this.state.fields.length; i++) {
-    //   if (id === "store") {
-    //     this.state.fields[i].value = val;
-    //   }
-    // }
+    for (let i = 0; i < this.state.fields.length; i++) {
+      if (id === "store") {
+        this.state.fields[i].value = val;
+      }
+    }
     if (id === "total") {
       this.total = val;
       this.manualInput = true;
@@ -80,7 +81,6 @@ export default class FormFields extends Component {
       });
     }
   }
-
   handleItemChange(index, type, val) {
     if (type === "price") {
       this.manualInput = false;
@@ -121,10 +121,10 @@ export default class FormFields extends Component {
         timestamp: Date.now(),
         store: this.state.store,
         items: expenseItems,
-        total: parseFloat(this.state.total).toFixed(2)
+        total: parseFloat(this.total).toFixed(2)
+        // total: parseFloat(this.state.total).toFixed(2)
       };
       this.props.submit(itemObj);
-      this.resetForm();
     } else {
       this.props.error();
     }
@@ -132,16 +132,23 @@ export default class FormFields extends Component {
   }
 
   generateKeyOrValueInputs(isKey) {
+    console.log("call generate")
+    // console.log(this.state.items)
     let inputType = (isKey ? "Item name" : "Price");
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
     let tmpPrice = 0;
 
-    if (this.props.editActive && this.props.expense.items.length !== 0) {
+    // console.log("this.props.editActive", this.props.editActive)
+    // console.log("this.props.expense.items.length", this.props.expense.items.length)
+    if (this.props.editActive) {
       this.editOn = true;
-
+    }
+    if (this.props.editActive && this.props.expense.items.length !== 0) {
+      // if (this.props.editActive && this.state.items !== 0) {
+      console.log("frop in first loop")
+      this.editOn = true;
       for (let i = 0; i < this.state.pairCount; i++) {
-
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i}`}
           defaultValue={
@@ -158,7 +165,7 @@ export default class FormFields extends Component {
       }
     } else {
       for (let i = 0; i < this.state.pairCount + 1; i++) {
-
+        console.log("frop in second  loop")
         inputElements.push(<TextInput
           placeholder={`${inputType} ${i + 1}`}
           id={inputId}
@@ -168,26 +175,48 @@ export default class FormFields extends Component {
           defaultValue={inputId === "item" ? this.state.items[i].name : this.state.items[i].price}
         />);
       }
+    } if (this.editOn === true) {
+      console.log("if (this.editOn === true)")
+      console.log(this.total)
+      this.total ? this.state.total = this.total : "";
     }
 
-    if (this.editOn === true) {
-      this.total ? this.props.expense.total = this.total : "";
-    }
+    //updating the name of the total field aka updating UI
 
-    if (this.manualInput === false) {
+    // if (this.manualInput === false) {
+    //   if (inputId === "price") {
+    //     for (let i = 0; i < this.state.items.length; i++) {
+    //       tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
+    //     }
+    //     this.total = tmpPrice;
+    //     for (i = 0; i < this.state.fields.length; i++) {
+    //       if (this.state.fields[i].id === "total") {
+    //         this.total ? this.state.fields[i].name = this.total.toString() : "";
+    //       }
+    //       if (this.editOn === true && this.state.fields[i].id === "store") {
+    //         console.log("here", this.state.store)
+    //         this.state.fields[i].name = this.state.store;
+
+    //       }
+    //     }
+    //   }
+    // }
+
+    if (!this.manualInput) {
       if (inputId === "price") {
         for (let i = 0; i < this.state.items.length; i++) {
           tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
         }
         this.total = tmpPrice;
+        // console.log(this.total)
         for (i = 0; i < this.state.fields.length; i++) {
           if (this.state.fields[i].id === "total") {
             this.total ? this.state.fields[i].name = this.total.toString() : "";
           }
-          if (this.editOn === true && this.state.fields[i].id === "store") {
-            this.state.fields[i].value = this.props.expense.store;
-          }
+
+
         }
+
       }
     }
 
@@ -228,8 +257,28 @@ export default class FormFields extends Component {
   }
 
   render() {
+    // return (
+    //   <View style={styles.col}>
+    //     {this.state.fields.map((f) => {
+    //       return (
+    //         f.id !== "items" ?
+    //           <TextInput
+    //             key={f.id}
+    //             style={styles.input}
+    //             defaultValue={this.props.editActive || this.props.fromOCR
+    //               ? this.props.expense[f.id] : ""}
+    //             textAlign="center"
+    //             underlineColorAndroid="transparent"
+    //             placeholder={f.name}
+    //             onChangeText={(text) => this.handleChange(f.id, text)}
+    //           />
+    //           :
+    //           this.renderItemsEntry()
+    //       );
+    //     })}
     return (
       <View style={styles.col}>
+
         {this.state.fields.map((f) => {
           return (
             f.id !== "items" && f.id != "store" ?
@@ -241,7 +290,7 @@ export default class FormFields extends Component {
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
                 onChangeText={(text) => this.handleChange(f.id, text)}
-
+                value={this.total}
 
               />
               : f.id === "store" ?
@@ -253,12 +302,12 @@ export default class FormFields extends Component {
                   underlineColorAndroid="transparent"
                   placeholder={f.name}
                   onChangeText={(text) => this.handleChange(f.id, text)}
-                // value={f.value} 
-                />
+                  value={f.value} />
                 :
                 this.renderItemsEntry()
           );
         })}
+
         <CommonButton
           text={this.props.submitText ? this.props.submitText : "Submit"}
           onPress={this.addItemToDB.bind(this)}
