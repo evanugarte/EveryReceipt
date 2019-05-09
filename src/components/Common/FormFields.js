@@ -214,7 +214,6 @@ export default class FormFields extends Component {
             this.total ? this.state.fields[i].name = this.total.toString() : "";
           }
 
-
         }
 
       }
@@ -290,7 +289,7 @@ export default class FormFields extends Component {
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
                 onChangeText={(text) => this.handleChange(f.id, text)}
-                value={this.total}
+              // value={this.total}
 
               />
               : f.id === "store" ?
