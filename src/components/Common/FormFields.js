@@ -49,8 +49,7 @@ export default class FormFields extends Component {
           this.state.fields[i].value = val;
         }
       }
-    }
-    if (id === "total") {
+    } else {
       this.manualInput = true;
     }
     this.setState({
