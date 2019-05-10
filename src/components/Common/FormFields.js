@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput } from "react-native";
+import { View, TextInput, Alert } from "react-native";
 import { styles } from "./styles";
 import CommonButton from "./CommonButton";
 import AddItemButton from "../ItemEntry/AddItemButton";
@@ -88,6 +88,15 @@ export default class FormFields extends Component {
         total: parseFloat(this.state.total).toFixed(2)
       };
       this.props.submit(itemObj);
+      let msg = this.props.editActive ? "Receipt modified" : "Receipt added to your list";
+      Alert.alert(
+        "Success!",
+        msg,
+        [
+          { text: "OK", onPress: "" },
+        ],
+        { cancelable: false }
+      );
     } else {
       this.props.error();
     }
