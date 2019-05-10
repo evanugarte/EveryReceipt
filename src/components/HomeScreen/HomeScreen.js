@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Text, View, ScrollView, TouchableOpacity, Button, Alert} from "react-native";
+import { Text, View, ScrollView, Alert} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
 import firebase from "firebase";
