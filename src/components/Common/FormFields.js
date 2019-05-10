@@ -230,8 +230,7 @@ export default class FormFields extends Component {
         if (this.state.fields[i].id === "store") {
           this.state.fields[i].name = this.state.store;
           this.state.fields[i].value = this.state.store;
-          console.log(this.state.fields[i].name)
-          console.log(this.state.fields[i].value);
+
 
         }
       }
