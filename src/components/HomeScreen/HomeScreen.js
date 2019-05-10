@@ -125,7 +125,7 @@ class HomeScreen extends React.Component {
       "Sorry, we couldn't read your receipt!",
       "",
       [
-        { text: "Ok", onPress: "" },
+        { text: "Close", onPress: "" },
       ],
       {cancelable: false}
     );
