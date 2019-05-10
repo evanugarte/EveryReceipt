@@ -139,6 +139,16 @@ export default class FormFields extends Component {
         // total: parseFloat(this.state.total).toFixed(2)
       };
       this.props.submit(itemObj);
+      this.resetForm();
+      this.editOn ? msg = "Receipt modified" : msg = "Receipt added to your list";
+      Alert.alert(
+        "Success!",
+        msg,
+        [
+          { text: "OK", onPress: "" },
+        ],
+        { cancelable: false }
+      );
     } else {
       this.props.error();
     }
@@ -187,33 +197,35 @@ export default class FormFields extends Component {
         />);
       }
     }
-
-
-    if (this.editOn === true) {
-      this.total ? this.props.expense.total = this.total : "";
+    //put the name of the store into a placeholder in editin mode
+    for (i = 0; i < this.state.fields.length; i++) {
+      if (this.editOn === true && this.state.fields[i].id === "store") {
+        this.state.fields[i].value = this.props.expense.store;
+      }
     }
 
-    //updating the name of the total field aka updating UI
-
-    if (this.manualInput === false) {
-      if (inputId === "price") {
-        for (let i = 0; i < this.state.items.length; i++) {
-          tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
-        }
-        this.total = tmpPrice;
-        for (i = 0; i < this.state.fields.length; i++) {
-          if (this.state.fields[i].id === "total") {
-            this.total ? this.state.fields[i].name = this.total.toString() : "";
+    if (!this.props.fromOCR) {
+      if (this.editOn === true) {
+        this.total ? this.props.expense.total = this.total : "";
+      }
+      if (this.manualInput === false) {
+        if (inputId === "price") {
+          for (let i = 0; i < this.state.items.length; i++) {
+            tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
           }
-          if (this.editOn === true && this.state.fields[i].id === "store") {
-            this.state.fields[i].value = this.props.expense.store;
+          this.total = tmpPrice;
+          for (i = 0; i < this.state.fields.length; i++) {
+            if (this.state.fields[i].id === "total") {
+              this.total ? this.state.fields[i].name = this.total.toString() : "";
+            }
+
           }
         }
       }
     }
-    // this.state.total = this.total;
+
     return inputElements;
-    // this.state.total = this.total;
+
   }
 
   addKeyValuePair() {
