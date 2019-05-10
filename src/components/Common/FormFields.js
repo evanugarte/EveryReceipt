@@ -12,9 +12,9 @@ export default class FormFields extends Component {
       store: "",
       total: 0,
       fields: [
-        { name: "Store Name", id: "store"},
-        { name: "Items", id: "items"},
-        { name: "Total Amount", id: "total"},
+        { name: "Store Name", id: "store" },
+        { name: "Items", id: "items" },
+        { name: "Total Amount", id: "total" },
       ],
       items: [{}]
     };
@@ -26,15 +26,16 @@ export default class FormFields extends Component {
     });
   }
 
+
+
   componentDidMount() {
     this.ensureValesSaved();
   }
 
   ensureValesSaved() {
-    
+
     let { expense } = this.props;
-    if(this.props.editActive)
-    { 
+    if (this.props.editActive) {
       let count = expense.items.length;
       let items = expense.items.length ? expense.items : [{}];
       this.setState({
@@ -44,18 +45,19 @@ export default class FormFields extends Component {
         pairCount: count
       });
     }
-    else if(this.props.fromOCR)
-    {
+    else if (this.props.fromOCR) {
       this.setState({
         store: expense.store,
         total: expense.total
       });
     }
   }
-
-  handleItemChange(index, type, val) {  
+  handleItemChange(index, type, val) {
+    if (type === "price") {
+      this.manualInput = false;
+    }
     let temp = [...this.state.items];
-    if(type === "item") {
+    if (type === "item") {
       temp[index].name = val;
     } else {
       temp[index].price = parseFloat(val).toFixed(2);
@@ -69,18 +71,18 @@ export default class FormFields extends Component {
     const { items, store, total } = this.state;
     let expenseItems = [];
     let valid = true;
-    for(let i = 0; i < items.length; i++) {
-      if(typeof items[i].name !== "undefined" && 
+    for (let i = 0; i < items.length; i++) {
+      if (typeof items[i].name !== "undefined" &&
         typeof items[i].price !== "undefined") {
         expenseItems.push(items[i]);
       }
     }
-    if(typeof store === "undefined" || store === "" 
-    || total === 0 || total === "") {
+    if (typeof store === "undefined" || store === ""
+      || total === 0 || total === "") {
       valid = false;
     }
 
-    if(valid) {
+    if (valid) {
       let itemObj = {
         timestamp: Date.now(),
         store: this.state.store,
@@ -108,33 +110,70 @@ export default class FormFields extends Component {
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
 
-    if(this.props.editActive && this.props.expense.items.length !== 0) {
+    if (this.props.editActive && this.props.expense.items.length !== 0) {
       for (let i = 0; i < this.state.pairCount; i++) {
-        inputElements.push(<TextInput 
-          placeholder={`${inputType} ${i}`} 
+        inputElements.push(<TextInput
+          placeholder={`${inputType} ${i}`}
           defaultValue={
-            this.props.editActive && i < this.props.expense.items.length ? 
-              isKey ?  
+            this.props.editActive && i < this.props.expense.items.length ?
+              isKey ?
                 this.props.expense.items[i].name
                 : this.props.expense.items[i].price
               : ""}
           id={inputId}
-          name={i} 
-          key={`${inputId}-${i}`} 
+          name={i}
+          key={`${inputId}-${i}`}
           onChangeText={(text) => this.handleItemChange(i, inputId, text)}
         />);
       }
     } else {
       for (let i = 0; i < this.state.pairCount + 1; i++) {
-        inputElements.push(<TextInput 
-          placeholder={`${inputType} ${i + 1}`} 
+        inputElements.push(<TextInput
+          placeholder={`${inputType} ${i + 1}`}
           id={inputId}
-          name={i} 
-          key={`${inputId}-${i}`} 
+          name={i}
+          key={`${inputId}-${i}`}
           onChangeText={(text) => this.handleItemChange(i, inputId, text)}
         />);
       }
     }
+    //put the name of the store into a placeholder in editin mode
+    for (i = 0; i < this.state.fields.length; i++) {
+      if (this.editOn === true && this.state.fields[i].id === "store") {
+        this.state.fields[i].value = this.props.expense.store;
+      }
+    }
+
+    if (!this.props.fromOCR) {
+      if (this.editOn === true) {
+        this.total ? this.props.expense.total = this.total : "";
+      }
+      if (this.manualInput === false) {
+        if (inputId === "price") {
+          for (let i = 0; i < this.state.items.length; i++) {
+            tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
+          }
+          this.total = tmpPrice;
+          for (i = 0; i < this.state.fields.length; i++) {
+            if (this.state.fields[i].id === "total") {
+              this.total ? this.state.fields[i].name = this.total.toString() : "";
+            }
+
+          }
+        }
+      }
+    } else {
+      for (i = 0; i < this.state.fields.length; i++) {
+        if (this.state.fields[i].id === "total") {
+          this.state.fields[i].name = this.state.total.toString();
+        }
+        if (this.state.fields[i].id === "store") {
+          this.state.fields[i].name = this.state.store;
+        }
+      }
+    }
+
+
 
     return inputElements;
   }
@@ -154,7 +193,7 @@ export default class FormFields extends Component {
       <React.Fragment key={"items-entry"}>
         <View style={styles.row}>
           {entries.map((x) => {
-            return ( 
+            return (
               <View key={x} style={styles.col}>
                 {this.generateKeyOrValueInputs(x)}
               </View>
@@ -171,14 +210,14 @@ export default class FormFields extends Component {
       </React.Fragment>
     );
   }
-  
+
   render() {
     return (
       <View style={styles.col}>
         {this.state.fields.map((f) => {
-          return(
+          return (
             f.id !== "items" ?
-              <TextInput 
+              <TextInput
                 key={f.id}
                 style={styles.input}
                 defaultValue={this.props.editActive || this.props.fromOCR
@@ -192,9 +231,9 @@ export default class FormFields extends Component {
               this.renderItemsEntry()
           );
         })}
-        <CommonButton 
-          text={this.props.submitText ? this.props.submitText : "Submit"} 
-          onPress={this.addItemToDB.bind(this)}  
+        <CommonButton
+          text={this.props.submitText ? this.props.submitText : "Submit"}
+          onPress={this.addItemToDB.bind(this)}
         />
       </View>
     );
