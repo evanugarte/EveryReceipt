@@ -131,7 +131,7 @@ export default class FormFields extends Component {
   // }
   addItemToDB() {
 
-    console.log("addin to DB", this.state.total, this.total);
+    // console.log("addin to DB", this.state.total, this.total)
     const { items, store, total } = this.state;
     let expenseItems = [];
     let valid = true;
@@ -206,39 +206,54 @@ export default class FormFields extends Component {
     }
 
 
-
     if (this.editOn === true) {
-      console.log("editOn", this.state.total, this.total);
-      this.total ? this.props.expense.total = this.total : "";
+      console.log("this.editOn true", this.state.total, this.total)
+      this.total ? this.state.total = this.total : "";
+      // this.total ? this.state.total = this.total : "";
+
+
     }
 
     //updating the name of the total field aka updating UI
 
     if (this.manualInput === false) {
+
       if (inputId === "price") {
+
         for (let i = 0; i < this.state.items.length; i++) {
           tmpPrice = Number(tmpPrice) + Number(this.state.items[i].price);
         }
         this.total = tmpPrice;
         for (i = 0; i < this.state.fields.length; i++) {
+          //moving this line
+          // this.total ? this.state.total = this.total : "";
           if (this.state.fields[i].id === "total") {
-            console.log("updating", this.state.total, this.total);
-            this.total ? this.state.fields[i].name = this.total.toString() : this.state.fields[i].name = this.state.total.toString();
-            // this.state.fields[i].value = this.state.fields[i].name;
-            this.total ? this.state.fields[i].value = this.total.toString() : "";
+            if (this.editOn === true) {
+              this.state.fields[i].name = this.state.total.toString();
+            }
+            console.log("this.state.total", this.state.total)
+
+            //update it too late
+            // this.total ? this.state.total = this.total : "";
+            this.total ? this.state.fields[i].name = this.total.toString() : "";
+            console.log("this.state.fields[i].name", this.state.fields[i].name)
+            this.state.fields[i].value = this.state.fields[i].name;
+
+
           }
           if (this.editOn === true && this.state.fields[i].id === "store") {
-
             this.state.fields[i].value = this.props.expense.store;
           }
+
         }
       }
-      // this.total ? this.state.total = this.total : "";
+
     }
+
+    console.log(this.state.total, this.total)
 
     return inputElements;
   }
-
   addKeyValuePair() {
     let oldItems = [...this.state.items];
     oldItems.push({});
