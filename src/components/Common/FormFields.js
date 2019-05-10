@@ -210,10 +210,7 @@ export default class FormFields extends Component {
       console.log("this.editOn true", this.state.total, this.total)
       this.total ? this.state.total = this.total : "";
       // this.total ? this.state.total = this.total : "";
-
-
     }
-
     //updating the name of the total field aka updating UI
 
     if (this.manualInput === false) {
