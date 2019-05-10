@@ -21,7 +21,7 @@ export default class ExpenseItem extends React.Component {
   confirm = (item) => {
     Alert.alert(
       "Are you sure you want to delete this entry?",
-      "",
+      `${item.store}, ${item.items.length} items, $${item.total}`,
       [
         { text: "Yes", onPress: () => this.props.handleDelete(item.id)},
         { text: "Cancel", onPress: "", style: "cancel" }
