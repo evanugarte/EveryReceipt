@@ -187,7 +187,7 @@ export const searchExpenses = (queryType, query) => {
           };
 
           if(queryType === "store") {
-            if(currObj.store.toLowerCase() === query.toLowerCase()) {
+            if(currObj.store.toLowerCase().includes(query.toLowerCase())) {
               searchResults.push(currObj);
             }
           } else if (queryType === "price-greater-than") {
