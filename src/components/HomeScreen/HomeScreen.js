@@ -153,10 +153,13 @@ class HomeScreen extends React.Component {
       return (<Text style={styles.logoText}>You don't have any expenses! Add some below.</Text>);
     } else {
       return (
-        <ExpenseList
-          expenses={expenses}
-          deleteExpense={this.handleDelete.bind(this)}
-          toggleEdit={this.toggleEdit.bind(this)} />
+        <React.Fragment>
+          <Text style={styles.logoText}>Receipt List</Text>
+          <ExpenseList
+            expenses={expenses}
+            deleteExpense={this.handleDelete.bind(this)}
+            toggleEdit={this.toggleEdit.bind(this)} />
+        </React.Fragment>
       );
     }
   }
