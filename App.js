@@ -5,7 +5,7 @@ import store from "./src/store";
 import { YellowBox } from "react-native";
 import _ from "lodash";
 
-YellowBox.ignoreWarnings(["Setting a timer"]);
+YellowBox.ignoreWarnings(["Setting a timer", "Warning: Failed prop type"]);
 
 export default class App extends React.Component {
   render() {
