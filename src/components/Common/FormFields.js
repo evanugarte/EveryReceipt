@@ -59,7 +59,6 @@ export default class FormFields extends Component {
         }
       }
     } else {
-      this.total = val;
       this.manualInput = true;
     }
     this.setState({
@@ -284,8 +283,7 @@ export default class FormFields extends Component {
               <TextInput
                 key={f.id}
                 style={styles.input}
-                defaultValue={this.props.editActive ? 
-                  this.props.expense[f.id].toString() : ""}
+                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
