@@ -50,6 +50,7 @@ export default class FormFields extends Component {
         }
       }
     } else {
+      this.total = val;
       this.manualInput = true;
     }
     this.setState({
