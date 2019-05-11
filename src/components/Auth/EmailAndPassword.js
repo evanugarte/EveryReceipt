@@ -7,6 +7,10 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../Common/styles";
 
+/**
+ * This component holds the UI email and password text entries, that the
+ * user sees when either on the login UI or sign up UI.
+ */
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -19,12 +23,14 @@ export default class LoginScreen extends React.Component {
     };
   }
 
+  /* This function shows the password to a user */
   toggleShow() {
     this.setState({
       hidePass: !this.state.hidePass
     });
   }
 
+  /**Listens for changes on input fields */
   handleChange(e) {
     this.props.handleChange(e);
   }

@@ -1,8 +1,12 @@
-/* eslint-disable linebreak-style */
 import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet } from "react-native";
 import React from "react";
+
+/**
+ *  this component renders the red add button to allow the user 
+ * to scan or manually enter a receipt
+ */
 export default class AddButton extends React.Component {
   constructor(props) {
     super(props);

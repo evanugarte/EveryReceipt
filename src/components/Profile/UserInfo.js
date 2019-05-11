@@ -2,6 +2,9 @@ import React from "react";
 import { View, Text } from "react-native";
 import { styles } from "../Common/styles";
 
+/**
+ * This component renders the user's first and last name
+ */
 export default class UserInfo extends React.Component {
   constructor(props) {
     super(props);

@@ -6,6 +6,10 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../Common/styles";
 
+/**
+ * This component renders 2 text inputs, which is the user's first and last
+ * name. This component can be seen when the user is trying to sign up.
+ */
 export default class LoginScreen extends React.Component {
   constructor(props){
     super(props);

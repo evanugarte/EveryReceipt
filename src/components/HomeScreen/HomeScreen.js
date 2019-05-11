@@ -7,10 +7,12 @@ import { styles } from "../Common/styles";
 import { getExpenses, deleteExpense, handleCloudOCR } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
-import { key } from "../../config/api_key";
 import { ImagePicker, Permissions } from "expo";
 
-
+/**
+ * This component renders the UI that the user will first see after the 
+ * user logs in. This component holds an add button and list of expenses.
+ */
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +26,7 @@ class HomeScreen extends React.Component {
       parsedObj: { }
     };
   }
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? "HomeScreen" : "LoggedOut");
@@ -37,25 +40,42 @@ class HomeScreen extends React.Component {
     });
   }
 
+  /**
+   * This function is initially called on my FormFields. We pass the call
+   * to expenseActions.js to delete an item by id.
+   */
   handleDelete(id) {
     this.props.deleteExpense(id);
   }
 
+  /** This function logs user out and sends user to the login screen */
   logout() {
     this.props.signOut();
   }
 
+  /** This function sends user to edit screen when user taps on the receipt, 
+   * with the selected receipt as a parameter.
+  */
   toggleEdit(item) {
     this.props.navigation.navigate("ItemEdit", {
       editItem: item
     });
   }
 
+  /**
+   * This function handles the press of our add button. If the id is the
+   * string "manual", then we navigate to add the item manuall.
+   * @param {string} btnId 
+   */
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
   }
 
+  /**
+   * This function calls on code in expenseActions.js, which calls the 
+   * Google Cloud API to get the image text.
+   */
   getReceiptText = async (uri) => {
     if (typeof uri === "undefined") return;
     
@@ -70,6 +90,12 @@ class HomeScreen extends React.Component {
     }
   }
 
+  /**
+   * After getting a value from google cloud, if it is in fact valid, we 
+   * will navigate to the manual add screen for the user to edit the parsed
+   * values.
+   * @param {object} item 
+   */
   handleAddingOCRItem(item) {
     if(this.state.valueParsed) {
       this.props.navigation.navigate("ManualAddScreen", {
@@ -78,6 +104,9 @@ class HomeScreen extends React.Component {
     }
   }
 
+  /**
+   * This function opens the user's camera
+   */
   useCameraHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
@@ -87,6 +116,9 @@ class HomeScreen extends React.Component {
     this.getReceiptText(result.base64);
   };
 
+  /**
+   * This function opens the user's photo library
+   */
   useLibraryHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -97,6 +129,11 @@ class HomeScreen extends React.Component {
     this.getReceiptText(result.base64);
   };
 
+  /**
+   * This function handles the event where the user selects an option from
+   * the red add button. Depending on the choice, we either open the camera,
+   * photo library, or navigate to the manual add screen
+   */
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
@@ -106,6 +143,10 @@ class HomeScreen extends React.Component {
       this.useCameraHandler();
   }
 
+  /**
+   * This function either renders a list of user's expenses from firebase, or
+   * a statement that the list is empty.
+   */
   renderExpenseList() {
     const { expenses } = this.props;
     if(expenses.length === 0) {
@@ -120,6 +161,9 @@ class HomeScreen extends React.Component {
     }
   }
 
+  /**
+   * If Google wasn't able to parse our values. We alert the user that a value couldn't be parsed
+   */
   openAlert() {
     Alert.alert(
       "Sorry, we couldn't read your receipt!",

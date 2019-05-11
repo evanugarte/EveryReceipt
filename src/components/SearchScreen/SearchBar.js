@@ -7,6 +7,11 @@ import {
 } from "react-native";
 import { styles } from "../Common/styles";
 
+/**
+ * This component represents the search bar that is seen on the search menu.
+ * With this component, users can select the query type and query value to
+ * search their expenses with.
+ */
 export default class SearchBar extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +40,6 @@ export default class SearchBar extends React.Component {
   render() {
     return(
       <View>
-        {/* <View style={styles.row}> */}
         <TextInput
           style={styles.search}
           textAlign="center"
@@ -55,7 +59,6 @@ export default class SearchBar extends React.Component {
             })
           }
         </Picker>
-        {/* </View> */}
         <TouchableOpacity onPress={this.handleSearch.bind(this)}
           style={styles.btnAdd} >
           <Text style={styles.text} >Search</Text>

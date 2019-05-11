@@ -7,6 +7,10 @@ import firebase from "firebase";
 import { styles } from "../Common/styles";
 import { signOut } from "../../actions/authActions";
 
+/**
+ * This component accounts for the Profile Screen's UI, showing user name and
+ * buttons to view all expenses.
+ */
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -18,10 +22,17 @@ class Profile extends React.Component {
     };
   }
   
+  /**
+   * This function navigates us to the view for viewing all of the user's 
+   * expenses.
+   */
   async seeAllExpenses() {
     this.props.navigation.navigate("AllExpenses");
   }
 
+  /**
+   * This function logs the user out.
+   */
   async logout() {
     this.props.signOut();
   }

@@ -6,7 +6,11 @@ import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import CommonButton from "../Common/CommonButton";
 
-
+/**
+ * This component is concerned with rendering the UI for entering an
+ * item's data to the database. This component is rendered under any
+ * of the three adding methods for the app.
+ */
 class ManualAddScreen extends Component {
   constructor(props) {
     super(props);
@@ -17,12 +21,21 @@ class ManualAddScreen extends Component {
     this.ocrItem = {};
   };
 
+  /**
+   * To ensure the user entered valid inputs, we will show an error
+   * message if an item's fields are invalid.
+   */
   showError() {
     this.setState({
       error: true
     });
   }
   
+  /**
+   * If we recieved data from Google OCR, we must handle this case
+   * in a special way, since the store name and total price will be
+   * automatically filled out.
+   */
   renderOCRFields() {
     let ocrActive = false;
     const { params } = this.props.navigation.state;
@@ -55,10 +68,17 @@ class ManualAddScreen extends Component {
     }
   }
 
+  /**
+   * This function navigates the user back to the home screen
+   */
   handleGoBack() {
     this.props.navigation.navigate("HomeScreen");
   }
 
+  /**
+   * This function adds an item to firebase.
+   * @param {object} item the item to be added
+   */
   addExpense(item) {
     this.props.addExpense(item);
   }

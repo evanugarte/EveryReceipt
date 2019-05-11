@@ -2,7 +2,11 @@ import React from "react";
 import { View, TouchableOpacity, Text, Button, Alert } from "react-native";
 import { styles } from "../Common/styles";
 
-
+/**
+ * This component renders any and all information to an expense, which includes
+ * items bought, store name and total. This component is used anywhere an
+ * ExpenseList is rendered.
+ */
 export default class ExpenseItem extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +22,10 @@ export default class ExpenseItem extends React.Component {
     });
   }
 
+  /**
+   * To make sure a user doesn't delete an receipt on accident, we ask if this
+   * receipt is really what the user would like to delete
+   */
   confirm = (item) => {
     Alert.alert(
       "Are you sure you want to delete this entry?",
@@ -30,6 +38,11 @@ export default class ExpenseItem extends React.Component {
     );
   };
 
+  /**
+   * This function uses a variable to check whether to delete an item or not.
+   * If we are displaying items only, then we don't render the red x.
+   * @param {object} item the item that is to have the delete button attached
+   */
   renderDeleteButton(item) {
     if(this.state.displayOnly) {
       return;
@@ -45,6 +58,7 @@ export default class ExpenseItem extends React.Component {
     }
   }
 
+  /**This function handles edit of an item */
   handleEdit(item) {
     if(!this.state.displayOnly) {
       this.props.toggleEdit(item);
