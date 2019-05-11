@@ -8,11 +8,6 @@ import {styles} from "../Common/styles";
 
 export default class AddItemButton extends React.Component {
 
-  // handlePress() {
-  //   /* Had to move prop function here, it is upset */
-  //   this.props
-  // }
-
   render(){
     let { onPress } = this.props;
     return(

@@ -4,6 +4,13 @@ const initialState = {
   authError: null
 };
 
+/**
+ * This function is concerned with handling the state of the application for
+ * anything related to user authentication.
+ * @param state the application's state
+ * @param action the object containing the payload for data handled by 
+ *      expenseActions or authActions
+ */
 export default function (state = initialState, action) {
   switch(action.type) {
   case LOGIN_SUCCESS:

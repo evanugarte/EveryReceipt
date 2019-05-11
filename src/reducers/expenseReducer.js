@@ -15,10 +15,11 @@ const initialState = {
 };
 
 /**
- * This function handles the state of our application, based on the actions
- * taken from saleActions.js in the actions folder.
- * @param state in charge of handling the array of sold expenses from mongoDB
- * @param action specifies which action is to be carried out
+ * This function is concerned with handling the state of the application for
+ * anything related to expenseActions.
+ * @param state the application's state
+ * @param action the object containing the payload for data handled by 
+ *      expenseActions or authActions
  */
 export default function (state = initialState, action) {
   switch (action.type) {

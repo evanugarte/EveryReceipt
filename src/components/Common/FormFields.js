@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { View, TextInput, Button, ScrollView, Alert } from "react-native";
+import { View, TextInput, Alert } from "react-native";
 import { styles } from "./styles";
-import { addExpense } from "../../actions/expenseActions";
-import { connect } from "react-redux";
 import CommonButton from "./CommonButton";
 import AddItemButton from "../ItemEntry/AddItemButton";
 
-
+/**
+ * This component renders a text entry box that is used to edit an item or
+ * add an item from any of the three methods,
+ */
 export default class FormFields extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +27,9 @@ export default class FormFields extends Component {
     };
   }
 
+  /**
+   * This function resets a form to empty, in case we wish to clear all fields.
+   */
   resetForm() {
     this.manualInput = false;
     this.total = 0;
@@ -42,6 +46,11 @@ export default class FormFields extends Component {
     });
   }
 
+  /**
+   * 
+   * @param {string} id the id of the text input that was changed
+   * @param {string} val the value of the text input
+   */
   handleChange(id, val) {
     if (id === "store") {
       for (let i = 0; i < this.state.fields.length; i++) {
@@ -50,6 +59,7 @@ export default class FormFields extends Component {
         }
       }
     } else {
+      this.total = val;
       this.manualInput = true;
     }
     this.setState({
@@ -61,6 +71,11 @@ export default class FormFields extends Component {
     this.ensureValesSaved();
   }
 
+  /**
+   * When the FormFields UI loads, we must ensure we render all the items sent
+   * to us, since this component is loaded for editing an item, a camera scan,
+   * or entering an item manually
+   */
   ensureValesSaved() {
     let { expense } = this.props;
     if (this.props.editActive) {
@@ -81,6 +96,12 @@ export default class FormFields extends Component {
     }
   }
 
+  /**
+   * This function handles an item in the receipts value changing.
+   * @param {int} index the index of the item that was changed
+   * @param {string} type a value that is either price or name
+   * @param {string} val the value of the text input box
+   */
   handleItemChange(index, type, val) {
     if (type === "price") {
       this.manualInput = false;
@@ -96,6 +117,11 @@ export default class FormFields extends Component {
     });
   }
 
+  /**
+   * This function adds an expence to Firebase after filling a receipts data 
+   * out. We check the values before sending, and add a timestamp to the 
+   * data. We then call on code in ExpenseActions.js
+   */
   addItemToDB() {
     this.total ? this.state.total = this.total : "";
     const { items, store, total } = this.state;
@@ -134,6 +160,10 @@ export default class FormFields extends Component {
     }
   }
 
+  /**
+   * This function renders the two columns of text input for receipt values.
+   * @param {boolean} isKey a parameter to specify whether we are to render a name or price input
+   */
   generateKeyOrValueInputs(isKey) {
     let inputType = (isKey ? "Item name" : "Price");
     let inputId = (isKey ? "item" : "price");
@@ -205,6 +235,9 @@ export default class FormFields extends Component {
     return inputElements;
   }
 
+  /**
+   * This function adds a row of item name and prices to an expense.
+   */
   addKeyValuePair() {
     let oldItems = [...this.state.items];
     oldItems.push({});
@@ -214,6 +247,10 @@ export default class FormFields extends Component {
     });
   }
 
+  /**
+   * This function allows us to render the two columns of item values, as well
+   * as a button to add a price and name pair.
+   */
   renderItemsEntry() {
     let entries = [1, 0];
     return (
@@ -247,7 +284,8 @@ export default class FormFields extends Component {
               <TextInput
                 key={f.id}
                 style={styles.input}
-                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
+                defaultValue={this.props.editActive ? 
+                  this.props.expense[f.id].toString() : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}

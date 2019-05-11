@@ -14,6 +14,10 @@ import firebase from "firebase";
 import { connect } from "react-redux";
 import { signIn } from "../../actions/authActions";
 
+/**
+ * This component holds the UI for the login screen, which is the first view
+ * that the user sees when the app loads
+ */
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -34,16 +38,17 @@ class LoginScreen extends React.Component {
     });
   }
 
+  /**This function logs in the user, calling code from authActions.js */
   login() {
     this.props.signIn(this.state);
-    // this.props.navigation.navigate("HomeScreen");
   }
 
+  /**This function sends user to a SignUp screen */
   toggleSignUp() {
     this.props.navigation.navigate("SignUpScreen");
   }
 
-  // Listens for changes on input fields
+  /*Listens for changes on input fields*/
   handleChange(id, value) {
     this.setState({
       [id]: value,
@@ -59,6 +64,10 @@ class LoginScreen extends React.Component {
     if(any === "Sign Up") this.toggleSignUp();
   }
 
+  /** 
+   * This function renders an appropriate error message, prompting the user
+   * to enter an email, password, or if the login failed.
+   */
   renderErrorMsg() {
     const { authError } = this.props;
     const { clicked } = this.state;

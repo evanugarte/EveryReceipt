@@ -10,6 +10,12 @@ import {
 } from "./types";
 import { key } from "../config/api_key";
 
+/**
+ * This function sorts an array of expense objects, based on timestamp
+ *      this allows us to display items rendered by date, in descending order.
+ * @param {object} arr, an array of expenses
+ * @return The sorted array, the most recently added expenses being first
+ */
 sorter = (arr) => {
   return arr.sort(
     (a,b) => 
@@ -18,12 +24,23 @@ sorter = (arr) => {
           : 0)); 
 };
 
+/**
+ * This function is called when we want to tell the program that 
+ *      we are loading expenses
+ */
 export const setItemsLoading = () => {
   return {
     type: EXPENSES_LOADING
   };
 };
 
+
+/**
+ * This asynchronous function sends a request to cloud vision API, and 
+ *      awaits a response from Google. 
+ * @param {string} uri a base64 encoded value
+ * @return The parsed object, which contains both total price and store.
+ */
 export const handleCloudOCR = async (uri) => {
 
   const parsedObj = {
@@ -91,6 +108,12 @@ export const handleCloudOCR = async (uri) => {
   return parsedObj;  
 };
 
+/**
+ * This function adds an expense to our list of expenses on Firebase 
+ * @param {object} expense an object containing store name, items and total
+ * @return The added expense as a payload to expenseReducer to be rendered in
+ *      the view.
+ */
 export const addExpense = (expense) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
@@ -103,6 +126,10 @@ export const addExpense = (expense) => {
   };
 };
 
+/**
+ * This function gets all the expenses from a list of expenses on Firebase 
+ * @return The array of expense object from firebase to be loaded in the view
+ */
 export const getExpenses = () => {
   let expenses = [];
   return (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -132,11 +159,9 @@ export const getExpenses = () => {
 
 
 /**
- * Referencing 
- * https://stackoverflow.com/questions/47876754/query-firestore-database-for-document-id
- *  - to find
- * https://stackoverflow.com/questions/47180076/how-to-delete-document-from-firestore-using-where-clause
- *  - to delete
+ * This function adds deletes expense to our list of expenses on Firebase 
+ * @param {string} id the id of our expense to delete
+ * @return The id of the expense that was deleted
  */
 export const deleteExpense = (id) => {
   return (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -153,6 +178,12 @@ export const deleteExpense = (id) => {
   };
 };
 
+/**
+ * This function updates the data of an expense, based on ID on Firebase 
+ * @param {string} id the id of our expense to update
+ * @param {object} expense any data to be updated to on Firebase
+ * @return The id of the expense that was updated
+ */
 export const editExpense = (id, expense) => {
   return (dispatch, getState, {getFirebase, getFirestore}) => {
     const firestore = getFirestore();
@@ -168,6 +199,13 @@ export const editExpense = (id, expense) => {
   };
 };
 
+/**
+ * This function searches our list of expenses on firebase, based on a type and
+ *      query value 
+ * @param {string} queryType the id of our expense to update
+ * @param {string} query any data to be updated to on Firebase
+ * @return The list of expenses that match the query
+ */
 export const searchExpenses = (queryType, query) => {
   let searchResults = [];
   return (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -206,7 +244,10 @@ export const searchExpenses = (queryType, query) => {
   };
 };
 
-
+/**
+ * This function sums up all the receipt totals in firebase
+ * @return {float} total receipt sum
+ */
 export const getTotalPrice = () => {
   let total = 0;
   return (dispatch, getState, {getFirebase, getFirestore}) => {

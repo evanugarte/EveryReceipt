@@ -6,6 +6,10 @@ import { connect } from "react-redux";
 import { getExpenses, getTotalPrice } from "../../actions/expenseActions";
 import { styles } from "../Common/styles";
 
+/**
+ * This component renders a view from where a screenshot can be exported
+ * to a user's camera roll.
+ */
 class AllExpenses extends React.Component {
   constructor(props) {
     super(props);

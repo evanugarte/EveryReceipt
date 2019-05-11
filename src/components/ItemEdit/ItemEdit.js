@@ -6,6 +6,11 @@ import FormFields from "../Common/FormFields";
 import { editExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 
+/**
+ * This component holds the UI for what the user sees when an item is to be
+ * edited. Users tap on an item and are brought to this page, where they can
+ * choose to render FormFields to edit.
+ */
 class ItemEdit extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +18,6 @@ class ItemEdit extends React.Component {
       editActive: false,
       prevouslyEdited: false,
       error: false,
-      //item fields
       id: "",
       store: "",
       items: [{}],
@@ -27,12 +31,21 @@ class ItemEdit extends React.Component {
     });
   }
 
+  /**
+   * If the user did not enter a correct value, we set this state variable
+   * to true, and display a modal.
+   */
   showError() {
     this.setState({
       error: true
     });
   }
 
+  /**
+   * If the user was editing an item and wishes to save the changes, 
+   * this function is called to do to.
+   * @param {object} expense the expense to be updated.
+   */
   submitEdit(expense) {
     this.setState({
       store: expense.store,
@@ -43,6 +56,10 @@ class ItemEdit extends React.Component {
     this.hideEditor();
   }
 
+  /**
+   * When the user clicks save or cancel when in edit mode, this function is
+   * called to hide FormFields, and only show non text entry data.
+   */
   hideEditor() {
     this.setState({
       prevouslyEdited: true,
@@ -50,6 +67,10 @@ class ItemEdit extends React.Component {
     });
   }
 
+  /**
+   * To open the editor, this function is called, and we set the state of the
+   * component to render the data in text fields.
+   */
   openEditor() {
     if(!this.state.prevouslyEdited) {
       const { params } = this.props.navigation.state;
@@ -66,6 +87,10 @@ class ItemEdit extends React.Component {
     });
   }
 
+  /**
+   * This function renders any and all items from a receipt.
+   * @param {array} itemList 
+   */
   renderItemsFromExpense(itemList) {
     let index = 1;
     if(itemList.length === 0) {
@@ -92,12 +117,8 @@ class ItemEdit extends React.Component {
   }
 
   /**
-   * id: doc.id,
-   * store: curr.store,
-   * items: curr.items,
-   * total: curr.total
+   * This function is called to render the most up to date receipt data from the user.
    */
-
   getExpenseInfo() {
     const { params } = this.props.navigation.state;
     const editItem = params ? params.editItem : null;
@@ -138,6 +159,11 @@ class ItemEdit extends React.Component {
     }
   }
 
+  /**
+   * Whether the FormFields is visible or not, we must ensure to render the
+   * right buttons. If edit is active we show a cancel option, and if not
+   * we show the options to go back to the parent view or to edit an item.
+   */
   renderButtons() {
     if(this.state.editActive) {
       return(
@@ -156,6 +182,9 @@ class ItemEdit extends React.Component {
     }
   }
 
+  /**
+   * This function navigates us to the parent view.
+   */
   goHome() {
     const { params } = this.props.navigation.state;
     const searchActive = params ? params.searchActive : null;

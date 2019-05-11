@@ -1,5 +1,13 @@
 import { LOGIN_SUCCESS, LOGIN_ERROR, SIGNOUT_SUCCESS, SIGNUP_SUCCESS, SIGNUP_ERROR } from "./types";
 
+/**
+ * This function logs a user in, and will be successful if an account
+ *    matches both the email and password.
+ * @param {object} credentials, the user's credentials that contain an 
+ *      email and password
+ * @return The program state to our reducer, authReducer.js, signifying
+ *      if the log in was successful or not.
+ */
 export const signIn = (credentials) => {
   return(dispatch, getState, {getFirebase}) => {
     const firebase = getFirebase();
@@ -15,6 +23,11 @@ export const signIn = (credentials) => {
   };
 };
 
+/**
+ * This function signs out our user from EveryReceipt.
+ * @return The program state to our reducer, authReducer.js, signifying
+ *      if the sign out was successful.
+ */
 export const signOut = () => {
   return (dispatch, getState, {getFirebase}) => {
     const firebase = getFirebase();
@@ -25,6 +38,14 @@ export const signOut = () => {
   };
 };
 
+/**
+ * This function signs a user in, and will be successful if an account
+ *    matches both the email and password.
+ * @param {object} newUser, the new user's credentials that contain an 
+ *      email password, first and last name
+ * @return The program state to our reducer, authReducer.js, signifying
+ *      if the sign up was successful or not.
+ */
 export const signUp = (newUser) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
